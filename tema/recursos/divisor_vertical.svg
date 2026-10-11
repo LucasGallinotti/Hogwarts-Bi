@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 500" width="16" height="500" preserveAspectRatio="none">
+  <!-- Divisor ornamental vertical: separa el análisis deportivo del de hechizos. -->
+  <defs>
+    <linearGradient id="v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D9B66F" stop-opacity="0"/>
+      <stop offset="0.15" stop-color="#D9B66F" stop-opacity="0.5"/>
+      <stop offset="0.5" stop-color="#F3D79B" stop-opacity="0.8"/>
+      <stop offset="0.85" stop-color="#D9B66F" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#D9B66F" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="7.4" y="0" width="1.2" height="500" fill="url(#v)"/>
+  <path d="M8 240 L13 250 L8 260 L3 250 Z" fill="#F3D79B"/>
+  <circle cx="8" cy="226" r="1.6" fill="#D9B66F"/><circle cx="8" cy="274" r="1.6" fill="#D9B66F"/>
+</svg>

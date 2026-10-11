@@ -1,0 +1,34 @@
+id,name,effect,category,difficulty,yearTaught
+lumos,Lumos,Enciende una luz en la punta de la varita.,encantamiento,1,1
+wingardium-leviosa,Wingardium Leviosa,Hace levitar objetos livianos.,encantamiento,1,1
+alohomora,Alohomora,Abre cerraduras simples.,encantamiento,1,1
+incendio,Incendio,Produce una llama controlada.,encantamiento,2,1
+reparo,Reparo,Recompone objetos rotos.,encantamiento,2,2
+engorgio,Engorgio,Aumenta el tamaño de un objeto.,encantamiento,2,2
+accio,Accio,Atrae un objeto hacia quien lanza el hechizo.,encantamiento,3,4
+silencio,Silencio,Silencia temporalmente a un objetivo.,encantamiento,3,5
+aguamenti,Aguamenti,Conjura un chorro de agua limpia.,encantamiento,3,6
+vera-verto,Vera Verto,Convierte un animal pequeño en una copa.,transformacion,2,2
+avifors,Avifors,Transforma un objeto en una bandada de aves.,transformacion,3,4
+draconifors,Draconifors,Transforma un objeto en un pequeño dragón.,transformacion,4,4
+evanesco,Evanesco,Hace desaparecer un objeto o sustancia.,transformacion,4,5
+riddikulus,Riddikulus,Neutraliza a un boggart volviéndolo ridículo.,defensa,2,3
+expelliarmus,Expelliarmus,Desarma al oponente.,defensa,2,2
+impedimenta,Impedimenta,Frena el avance de un objetivo.,defensa,3,4
+protego,Protego,Levanta un escudo que desvía hechizos menores.,defensa,3,5
+stupefy,Stupefy,Aturde al objetivo y lo deja inconsciente.,defensa,3,5
+expecto-patronum,Expecto Patronum,Conjura un guardián de energía positiva.,defensa,5,7
+rictusempra,Rictusempra,Provoca un ataque de cosquillas.,maleficio,1,2
+locomotor-mortis,Locomotor Mortis,Traba las piernas del objetivo.,maleficio,2,1
+tarantallegra,Tarantallegra,Obliga al objetivo a bailar sin control.,maleficio,2,2
+furnunculus,Furnunculus,Cubre la piel del objetivo de forúnculos.,maleficio,2,4
+densaugeo,Densaugeo,Hace crecer los dientes del objetivo.,maleficio,2,4
+petrificus-totalus,Petrificus Totalus,Inmoviliza por completo el cuerpo del objetivo.,maleficio,3,1
+levicorpus,Levicorpus,Suspende al objetivo cabeza abajo por el tobillo.,maleficio,3,6
+ferula,Ferula,Conjura vendajes y una tablilla.,curacion,2,5
+anapneo,Anapneo,Despeja las vías respiratorias.,curacion,2,5
+episkey,Episkey,Repara heridas y fracturas menores.,curacion,3,6
+vulnera-sanentur,Vulnera Sanentur,Cierra heridas profundas.,curacion,5,7
+finite-incantatem,Finite Incantatem,Anula los efectos de hechizos activos.,contrahechizo,3,3
+rennervate,Rennervate,Reanima a quien fue aturdido.,contrahechizo,3,5
+specialis-revelio,Specialis Revelio,Revela encantamientos ocultos en un objeto.,contrahechizo,4,6

@@ -1,0 +1,734 @@
+// Medidas del modelo HogwartsBI (generado desde el TMDL por scripts/documentar_modelo.py).
+
+// ── 1. Puntos ───────────────────────────────────────────────────
+
+// Suma neta de puntos de casa (premios menos sanciones) en el contexto de filtro.
+[Puntos Netos] =
+    SUM ( FactPuntos[Puntos] )
+// Formato: #,0;-#,0;0
+
+// Puntos ganados por premios (sólo anotaciones positivas).
+[Puntos Otorgados] =
+    CALCULATE ( SUM ( FactPuntos[Puntos] ), FactPuntos[Puntos] > 0 )
+// Formato: #,0
+
+// Puntos perdidos por sanciones, expresados en positivo.
+[Puntos Descontados] =
+    - CALCULATE ( SUM ( FactPuntos[Puntos] ), FactPuntos[Puntos] < 0 )
+// Formato: #,0
+
+// Cantidad de anotaciones (premios y sanciones).
+[Anotaciones] =
+    COUNTROWS ( FactPuntos )
+// Formato: #,0
+
+// Puntos netos acumulados semana a semana dentro del período seleccionado. Quita los filtros del eje (ALLSELECTED) y suma todas las semanas hasta la actual.
+[Puntos Acumulados] =
+    VAR _ultimaSemana = MAX ( DimSemana[SemanaGlobal] )
+    RETURN
+        IF (
+            NOT ISBLANK ( _ultimaSemana ),
+            CALCULATE ( [Puntos Netos], DimSemana[SemanaGlobal] <= _ultimaSemana, ALLSELECTED ( DimSemana ) )
+        )
+// Formato: #,0;-#,0;0
+
+// Participación de la casa en los puntos netos de las cuatro casas.
+[% Participación] =
+    DIVIDE ( [Puntos Netos], CALCULATE ( [Puntos Netos], REMOVEFILTERS ( DimCasa ) ) )
+// Formato: 0.0%;-0.0%;0.0%
+
+// Peso de cada categoría dentro de los puntos otorgados (las sanciones no forman parte del denominador).
+[% de Puntos Otorgados] =
+    DIVIDE ( [Puntos Otorgados], CALCULATE ( [Puntos Otorgados], REMOVEFILTERS ( DimCategoria ) ) )
+// Formato: 0.0%;-0.0%;0.0%
+
+// ── 2. Ranking ──────────────────────────────────────────────────
+
+// Puesto de la casa en la Copa del período (1 = líder). Los empates comparten puesto (1, 2, 2, 4). Itera ALL ( DimCasa ) —la tabla completa— para que ningún filtro sobre otra columna de la casa (nombre, sigla) sobreviva a la transición de contexto.
+[Posición] =
+    IF (
+        HASONEVALUE ( DimCasa[CasaKey] ),
+        RANKX ( ALL ( DimCasa ), [Puntos Netos], , DESC, SKIP )
+    )
+// Formato: 0
+
+// Mayor puntaje neto entre las cuatro casas en el período.
+[Puntos del Líder] =
+    MAXX ( ALL ( DimCasa ), [Puntos Netos] )
+// Formato: #,0;-#,0;0
+
+// Casa (o casas, si empatan) con más puntos netos en el período.
+[Casa Líder] =
+    VAR _maximo = [Puntos del Líder]
+    VAR _lideres = FILTER ( ALL ( DimCasa ), [Puntos Netos] = _maximo )
+    RETURN
+        IF ( NOT ISBLANK ( _maximo ), CONCATENATEX ( _lideres, DimCasa[Casa], " y ", DimCasa[Casa], ASC ) )
+
+// Diferencia entre el primer y el segundo puesto (0 si hay empate en la punta).
+[Ventaja del Líder] =
+    VAR _tabla = ADDCOLUMNS ( ALL ( DimCasa ), "@Puntos", [Puntos Netos] )
+    VAR _maximo = MAXX ( _tabla, [@Puntos] )
+    VAR _lideres = COUNTROWS ( FILTER ( _tabla, [@Puntos] = _maximo ) )
+    VAR _segundo = MAXX ( FILTER ( _tabla, [@Puntos] < _maximo ), [@Puntos] )
+    RETURN
+        IF ( NOT ISBLANK ( _maximo ), IF ( _lideres > 1, 0, _maximo - _segundo ) )
+// Formato: #,0
+
+// Puntos que separan a la casa del líder (0 para el líder).
+[Distancia al Líder] =
+    IF ( HASONEVALUE ( DimCasa[CasaKey] ), [Puntos del Líder] - [Puntos Netos] )
+// Formato: #,0
+
+// Puesto de la casa en el período anterior (ver [Puntos Período Anterior]).
+[Posición Período Anterior] =
+    IF (
+        HASONEVALUE ( DimCasa[CasaKey] ) && NOT ISBLANK ( [Puntos Período Anterior] ),
+        RANKX ( ALL ( DimCasa ), [Puntos Período Anterior], , DESC, SKIP )
+    )
+// Formato: 0
+
+// Puestos ganados (▲) o perdidos (▼) respecto del período anterior.
+[Cambio de Posición] =
+    VAR _antes = [Posición Período Anterior]
+    RETURN
+        IF ( NOT ISBLANK ( _antes ), _antes - [Posición] )
+// Formato: ▲0;▼0;=
+
+// ── 3. Comparación temporal ─────────────────────────────────────
+
+// Puntos netos del período anterior del mismo nivel: si el contexto es un único trimestre, el trimestre previo (cruzando de curso si hace falta); si es un curso, el curso previo con los mismos trimestres seleccionados. Devuelve 0 si el período anterior existe pero no tuvo anotaciones, y vacío si no hay período anterior.
+[Puntos Período Anterior] =
+    VAR _cantTrimestres = DISTINCTCOUNT ( DimTrimestre[IndiceTrimestre] )
+    VAR _cantCursos = DISTINCTCOUNT ( DimTrimestre[CursoNumero] )
+    VAR _indice = MAX ( DimTrimestre[IndiceTrimestre] )
+    VAR _curso = MAX ( DimTrimestre[CursoNumero] )
+    VAR _ordenes = VALUES ( DimTrimestre[TrimestreOrden] )
+    RETURN
+        SWITCH (
+            TRUE (),
+            _cantTrimestres = 1 && _indice > 1,
+                COALESCE (
+                    CALCULATE (
+                        [Puntos Netos],
+                        REMOVEFILTERS ( DimSemana ),
+                        REMOVEFILTERS ( DimTrimestre ),
+                        DimTrimestre[IndiceTrimestre] = _indice - 1
+                    ),
+                    0
+                ),
+            _cantTrimestres > 1 && _cantCursos = 1 && _curso > 1,
+                COALESCE (
+                    CALCULATE (
+                        [Puntos Netos],
+                        REMOVEFILTERS ( DimSemana ),
+                        REMOVEFILTERS ( DimTrimestre ),
+                        DimTrimestre[CursoNumero] = _curso - 1,
+                        TREATAS ( _ordenes, DimTrimestre[TrimestreOrden] )
+                    ),
+                    0
+                )
+        )
+// Formato: #,0;-#,0;0
+
+// Texto que indica contra qué período se compara (p. ej. "vs. C.V · Otoño" o "vs. Curso IV").
+[Período de Comparación] =
+    VAR _cantTrimestres = DISTINCTCOUNT ( DimTrimestre[IndiceTrimestre] )
+    VAR _cantCursos = DISTINCTCOUNT ( DimTrimestre[CursoNumero] )
+    VAR _indice = MAX ( DimTrimestre[IndiceTrimestre] )
+    VAR _curso = MAX ( DimTrimestre[CursoNumero] )
+    RETURN
+        SWITCH (
+            TRUE (),
+            _cantTrimestres = 1 && _indice > 1,
+                "vs. " & CALCULATE ( SELECTEDVALUE ( DimTrimestre[Período] ), REMOVEFILTERS ( DimTrimestre ), DimTrimestre[IndiceTrimestre] = _indice - 1 ),
+            _cantTrimestres > 1 && _cantCursos = 1 && _curso > 1,
+                "vs. " & CALCULATE ( SELECTEDVALUE ( DimTrimestre[Curso] ), REMOVEFILTERS ( DimTrimestre ), DimTrimestre[CursoNumero] = _curso - 1 ),
+            "Sin período anterior comparable"
+        )
+
+// Diferencia de puntos netos contra el período anterior.
+[Variación vs Período Anterior] =
+    VAR _anterior = [Puntos Período Anterior]
+    RETURN
+        IF ( NOT ISBLANK ( _anterior ), COALESCE ( [Puntos Netos], 0 ) - _anterior )
+// Formato: +#,0;-#,0;0
+
+// Variación como texto para tarjetas: el número y contra qué período se compara (o por qué no hay comparación).
+[Variación vs Período Anterior (texto)] =
+    VAR _variacion = [Variación vs Período Anterior]
+    RETURN
+        IF (
+            ISBLANK ( _variacion ),
+            "Sin período previo",
+            FORMAT ( _variacion, "+#,0;-#,0;0" ) & " " & [Período de Comparación]
+        )
+
+// Variación relativa contra el período anterior (sobre el valor absoluto del período anterior).
+[Variación % vs Período Anterior] =
+    VAR _anterior = [Puntos Período Anterior]
+    RETURN
+        IF ( NOT ISBLANK ( _anterior ), DIVIDE ( COALESCE ( [Puntos Netos], 0 ) - _anterior, ABS ( _anterior ) ) )
+// Formato: +0.0%;-0.0%;0.0%
+
+// ── 4. Estudiantes ──────────────────────────────────────────────
+
+// Puntos netos de estudiantes reales (excluye los premios colectivos de la casa).
+[Puntos Netos Estudiante] =
+    IF ( SELECTEDVALUE ( DimEstudiante[EsEstudiante], FALSE () ), [Puntos Netos] )
+// Formato: #,0;-#,0;0
+
+// Puesto del estudiante entre los estudiantes con anotaciones en la selección actual.
+[Posición Estudiante] =
+    IF (
+        SELECTEDVALUE ( DimEstudiante[EsEstudiante], FALSE () ) && NOT ISBLANK ( [Puntos Netos] ),
+        RANKX (
+            FILTER ( ALLSELECTED ( DimEstudiante ), DimEstudiante[EsEstudiante] && NOT ISBLANK ( [Puntos Netos] ) ),
+            [Puntos Netos],
+            ,
+            DESC,
+            SKIP
+        )
+    )
+// Formato: 0
+
+// Porcentaje de los puntos netos de su casa que aportó el estudiante en el período. Usa TREATAS porque la casa del estudiante es un atributo sin relación.
+[% Contribución a la Casa] =
+    VAR _casa = SELECTEDVALUE ( DimEstudiante[CasaKey] )
+    RETURN
+        IF (
+            NOT ISBLANK ( _casa ),
+            DIVIDE (
+                [Puntos Netos Estudiante],
+                CALCULATE ( [Puntos Netos], REMOVEFILTERS ( DimEstudiante ), TREATAS ( { _casa }, DimCasa[CasaKey] ) )
+            )
+        )
+// Formato: 0.0%;-0.0%;0.0%
+
+// ── 5. Quidditch ────────────────────────────────────────────────
+
+// Partidos distintos en el contexto (cada partido tiene dos filas en FactPartidoEquipo).
+[Partidos] =
+    DISTINCTCOUNT ( FactPartidoEquipo[PartidoKey] )
+// Formato: #,0
+
+// Partidos disputados por la casa (o participaciones, si no hay una casa en contexto).
+[Partidos Jugados] =
+    COUNTROWS ( FactPartidoEquipo )
+// Formato: #,0
+
+// Partidos ganados. Muestra 0 (no vacío) si la casa jugó y no ganó.
+[Victorias] =
+    COALESCE (
+        CALCULATE ( COUNTROWS ( FactPartidoEquipo ), FactPartidoEquipo[Resultado] = "Victoria" ),
+        IF ( [Partidos Jugados] > 0, 0 )
+    )
+// Formato: #,0
+
+// Partidos perdidos. Muestra 0 (no vacío) si la casa jugó y no perdió.
+[Derrotas] =
+    COALESCE (
+        CALCULATE ( COUNTROWS ( FactPartidoEquipo ), FactPartidoEquipo[Resultado] = "Derrota" ),
+        IF ( [Partidos Jugados] > 0, 0 )
+    )
+// Formato: #,0
+
+// Victorias sobre partidos jugados. Sólo tiene sentido por casa: a nivel total sería siempre 50 %.
+[% Victorias] =
+    IF ( HASONEVALUE ( DimCasa[CasaKey] ), DIVIDE ( [Victorias], [Partidos Jugados] ) )
+// Formato: 0%
+
+// Puntos de partido anotados (goles × 10 + Snitch).
+[Puntos a Favor] =
+    SUM ( FactPartidoEquipo[PuntosAFavor] )
+// Formato: #,0
+
+[Puntos en Contra] =
+    SUM ( FactPartidoEquipo[PuntosEnContra] )
+// Formato: #,0
+
+[Diferencia de Puntos] =
+    [Puntos a Favor] - [Puntos en Contra]
+// Formato: +#,0;-#,0;0
+
+// Snitches atrapadas.
+[Snitches Atrapadas] =
+    SUM ( FactPartidoEquipo[AtrapoSnitch] )
+// Formato: #,0
+
+// Goles convertidos (10 puntos cada uno).
+[Goles] =
+    SUM ( FactGoles[Goles] )
+// Formato: #,0
+
+// Partidos cuyo resultado habría cambiado sin los 150 puntos de la Snitch.
+[Partidos Decididos por la Snitch] =
+    COALESCE (
+        CALCULATE ( [Partidos], DimPartido[Snitch Decisiva] = TRUE () ),
+        IF ( [Partidos] > 0, 0 )
+    )
+// Formato: #,0
+
+[% Decididos por la Snitch] =
+    DIVIDE ( [Partidos Decididos por la Snitch], [Partidos] )
+// Formato: 0%
+
+// Promedio de puntos por partido sumando ambos equipos. Con una casa filtrada, promedia sus partidos (contando también al rival).
+[Puntos por Partido] =
+    DIVIDE (
+        CALCULATE ( SUM ( FactPartidoEquipo[PuntosAFavor] ), REMOVEFILTERS ( DimCasa ), VALUES ( FactPartidoEquipo[PartidoKey] ) ),
+        [Partidos]
+    )
+// Formato: #,0.0
+
+// Diferencia de puntos entre ganador y perdedor de un partido (para tablas por partido).
+[Margen del Partido] =
+    IF (
+        [Partidos] = 1,
+        CALCULATE (
+            MAX ( FactPartidoEquipo[PuntosAFavor] ) - MIN ( FactPartidoEquipo[PuntosAFavor] ),
+            REMOVEFILTERS ( DimCasa ),
+            VALUES ( FactPartidoEquipo[PartidoKey] )
+        )
+    )
+// Formato: #,0
+
+// Puesto en la Copa de Quidditch: más puntos de partido a favor; desempatan las victorias. Compara siempre contra las cuatro casas.
+[Posición Copa Quidditch] =
+    IF (
+        HASONEVALUE ( DimCasa[CasaKey] ) && [Partidos] > 0,
+        RANKX (
+            ALL ( DimCasa ),
+            COALESCE ( [Puntos a Favor], 0 ) * 1000 + COALESCE ( [Victorias], 0 ),
+            ,
+            DESC,
+            SKIP
+        )
+    )
+// Formato: 0
+
+// ── 6. Hechizos ─────────────────────────────────────────────────
+
+// Lanzamientos de hechizos registrados en prácticas.
+[Intentos] =
+    SUM ( FactPracticas[Intentos] )
+// Formato: #,0
+
+// Lanzamientos exitosos.
+[Éxitos] =
+    SUM ( FactPracticas[Exitos] )
+// Formato: #,0
+
+// Éxitos sobre intentos.
+[Tasa de Éxito] =
+    DIVIDE ( [Éxitos], [Intentos] )
+// Formato: 0.0%
+
+// Tasa de éxito de las cuatro casas juntas, con los demás filtros del contexto.
+[Tasa de Éxito del Colegio] =
+    CALCULATE ( [Tasa de Éxito], REMOVEFILTERS ( DimCasa ) )
+// Formato: 0.0%
+
+// Diferencia en puntos porcentuales entre la tasa de éxito del contexto y la del colegio.
+[Diferencia vs Colegio (pp)] =
+    IF ( NOT ISBLANK ( [Tasa de Éxito] ), ( [Tasa de Éxito] - [Tasa de Éxito del Colegio] ) * 100 )
+// Formato: +0.0 pp;-0.0 pp;0.0 pp
+
+// Hechizos distintos con al menos un intento.
+[Hechizos Practicados] =
+    CALCULATE ( DISTINCTCOUNT ( FactPracticas[HechizoKey] ), FactPracticas[Intentos] > 0 )
+// Formato: #,0
+
+// Hechizo con más intentos en el contexto (desempata por nombre).
+[Hechizo Más Practicado] =
+    VAR _top = TOPN ( 1, VALUES ( DimHechizo[Hechizo] ), [Intentos], DESC, DimHechizo[Hechizo], ASC )
+    RETURN
+        IF ( NOT ISBLANK ( [Intentos] ), MAXX ( _top, DimHechizo[Hechizo] ) )
+
+// Correlación de Pearson entre dificultad y tasa de éxito, calculada sobre los hechizos del contexto (necesita al menos 3).
+[Correlación Dificultad–Éxito] =
+    VAR _datos =
+        FILTER (
+            ADDCOLUMNS (
+                VALUES ( DimHechizo[HechizoKey] ),
+                "@x", CALCULATE ( MAX ( DimHechizo[Dificultad] ) ),
+                "@y", [Tasa de Éxito]
+            ),
+            NOT ISBLANK ( [@y] )
+        )
+    VAR _n = COUNTROWS ( _datos )
+    VAR _mediaX = AVERAGEX ( _datos, [@x] )
+    VAR _mediaY = AVERAGEX ( _datos, [@y] )
+    VAR _covarianza = SUMX ( _datos, ( [@x] - _mediaX ) * ( [@y] - _mediaY ) )
+    VAR _varX = SUMX ( _datos, ( [@x] - _mediaX ) ^ 2 )
+    VAR _varY = SUMX ( _datos, ( [@y] - _mediaY ) ^ 2 )
+    RETURN
+        IF ( _n >= 3 && _varX > 0 && _varY > 0, _covarianza / SQRT ( _varX * _varY ) )
+// Formato: 0.00;-0.00;0.00
+
+// ── 7. Formato y textos ─────────────────────────────────────────
+
+// Color de identidad de la casa en contexto (dorado si no hay una sola casa). Para formato condicional.
+[Color Casa] =
+    SELECTEDVALUE ( DimCasa[ColorHex], "#D9B66F" )
+
+// Titular dinámico del Gran Comedor: quién lidera, en qué período y por cuánto.
+[Titular Gran Comedor] =
+    VAR _cantCursos = DISTINCTCOUNT ( DimTrimestre[CursoNumero] )
+    VAR _cantTrimestres = DISTINCTCOUNT ( DimTrimestre[TrimestreOrden] )
+    VAR _totalCursos = CALCULATE ( DISTINCTCOUNT ( DimTrimestre[CursoNumero] ), REMOVEFILTERS ( DimTrimestre ) )
+    VAR _cursos =
+        SWITCH (
+            TRUE (),
+            _cantCursos = 1, "el " & SELECTEDVALUE ( DimTrimestre[Curso] ),
+            _cantCursos = _totalCursos, "los cinco cursos",
+            "los cursos seleccionados"
+        )
+    VAR _periodo =
+        IF (
+            _cantTrimestres = 1,
+            "el trimestre de " & SELECTEDVALUE ( DimTrimestre[Trimestre] ) & IF ( _cantCursos = 1, " d" & _cursos, " de " & _cursos ),
+            _cursos
+        )
+    VAR _ventaja = [Ventaja del Líder]
+    RETURN
+        IF (
+            ISBLANK ( [Puntos del Líder] ),
+            "Sin anotaciones en el período seleccionado",
+            [Casa Líder] & " lidera " & _periodo & ": " & FORMAT ( [Puntos del Líder], "#,0" ) & " puntos"
+                & IF ( _ventaja > 0, " (+" & FORMAT ( _ventaja, "#,0" ) & " sobre el segundo)", " (empate en la punta)" )
+        )
+
+// Titular dinámico de Quidditch.
+[Titular Quidditch] =
+    IF (
+        [Partidos] > 0,
+        "La Snitch dio vuelta " & FORMAT ( [Partidos Decididos por la Snitch], "0" ) & " de " & FORMAT ( [Partidos], "0" ) & " partidos",
+        "Sin partidos en el período seleccionado"
+    )
+
+// Titular dinámico de Hechizos a partir de la correlación.
+[Titular Hechizos] =
+    VAR _r = [Correlación Dificultad–Éxito]
+    RETURN
+        IF (
+            ISBLANK ( _r ),
+            "Sin prácticas suficientes para medir la relación",
+            IF ( _r < -0.5, "A mayor dificultad, menor tasa de éxito", IF ( _r > 0.5, "Los hechizos difíciles salen mejor", "La dificultad casi no explica el éxito" ) )
+                & " (r = " & FORMAT ( _r, "0.00" ) & ")"
+        )
+
+// Fondo de celda para destacar al campeón en la matriz de puestos (formato condicional).
+[Color Fondo Puesto] =
+    SWITCH ( [Posición], 1, "#3D3018", "#111625" )
+
+// ── 8. Visuales SVG ─────────────────────────────────────────────
+
+// SVG dinámico de los cuatro relojes de arena (Gran Comedor). La arena de cada reloj es proporcional a los [Puntos Netos] de la casa en el contexto de filtro: 92 px × max(puntos, 0) / máximo positivo entre las casas (sin división por cero ni niveles negativos). Itera ALL ( DimCasa ) para que el segmentador de casa no oculte las demás: las no seleccionadas se atenúan. Bajo cada reloj, el sigilo del elemento de la casa. Implementación de referencia y pruebas: scripts/svg_relojes.py.
+[Relojes de Arena (SVG)] =
+    VAR _casas = ADDCOLUMNS ( ALL ( DimCasa ), "@Puntos", [Puntos Netos] )
+    VAR _maximo = MAX ( MAXX ( _casas, COALESCE ( [@Puntos], 0 ) ), 0 )
+    VAR _escala = IF ( _maximo > 0, _maximo, 1 )
+    VAR _empatadosPunta = COUNTROWS ( FILTER ( _casas, COALESCE ( [@Puntos], 0 ) = _maximo ) )
+    VAR _hayFiltroCasa = ISFILTERED ( DimCasa )
+    VAR _seleccion = VALUES ( DimCasa[CasaKey] )
+    VAR _defs = "<defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='#4A3A1D'/><stop offset='.3' stop-color='#F3D79B'/><stop offset='.55' stop-color='#B08A44'/><stop offset='1' stop-color='#3A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='#F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='#F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='#fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='#000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(#b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(#b)'/><circle cx='56' cy='3' r='2.6' fill='#F3D79B'/><circle cx='204' cy='3' r='2.6' fill='#F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(#b)'/><rect x='56' y='36' width='148' height='4' fill='#2E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(#b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(#b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='#E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='#2E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(#b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(#b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(#b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='#3A2E17' stroke-width='1.4'/><g fill='#2E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='#0E121C' stroke='url(#b)' stroke-width='2.5'/></g><g id='v' stroke='#F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='#fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='#fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='#fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='#F3D79B'/></defs>"
+    VAR _relojes =
+        CONCATENATEX (
+            _casas,
+            VAR _sinDatos = ISBLANK ( [@Puntos] )
+            VAR _p = COALESCE ( [@Puntos], 0 )
+            VAR _alto = ROUND ( 92 * MAX ( _p, 0 ) / _escala, 0 )
+            VAR _y = 298 - _alto
+            VAR _puesto = COUNTROWS ( FILTER ( _casas, COALESCE ( [@Puntos], 0 ) > _p ) ) + 1
+            VAR _lider = _maximo > 0 && _p = _maximo
+            VAR _color = DimCasa[ColorHex]
+            VAR _atenuado = _hayFiltroCasa && NOT ( DimCasa[CasaKey] IN _seleccion )
+            VAR _glifo =
+                SWITCH (
+                    DimCasa[Elemento],
+                    "Fuego", "M12 3.5L21 19.5H3Z",
+                    "Agua", "M12 20.5L3 4.5H21Z",
+                    "Aire", "M12 3.5L21 19.5H3ZM6.6 13.5H17.4",
+                    "Tierra", "M12 20.5L3 4.5H21ZM6.6 10.5H17.4"
+                )
+            VAR _rect = "<rect x='87' y='" & FORMAT ( _y, "0" ) & "' width='86' height='" & FORMAT ( _alto, "0" ) & "' "
+            VAR _detalle =
+                SWITCH (
+                    TRUE (),
+                    _sinDatos, "Sin anotaciones",
+                    _p < 0, "Saldo negativo",
+                    _lider, IF ( _empatadosPunta > 1, "Comparte la punta", "Lidera" ),
+                    _maximo <= 0, "Sin puntos a favor",
+                    "a " & FORMAT ( _maximo - _p, "#,0" ) & " del líder"
+                )
+            RETURN
+                "<g transform='translate(" & FORMAT ( ( DimCasa[Orden] - 1 ) * 260, "0" ) & " 0)' opacity='" & IF ( _atenuado, ".3", "1" ) & "'"
+                    & " data-casa='" & DimCasa[CasaKey] & "' data-puntos='" & FORMAT ( _p, "0" ) & "' data-nivel='" & FORMAT ( _alto, "0" )
+                    & "' data-puesto='" & FORMAT ( _puesto, "0" ) & "'>"
+                    & IF (
+                        _lider,
+                        "<ellipse cx='130' cy='165' rx='122' ry='165' fill='url(#l)'/>"
+                            & "<use href='#e' x='36' y='70' opacity='.8'/><use href='#e' x='226' y='130' opacity='.6'/>"
+                            & "<use href='#e' x='222' y='46' opacity='.9'/>"
+                    )
+                    & "<ellipse cx='130' cy='329' rx='84' ry='4' fill='" & _color & "' fill-opacity='.35'/>"
+                    & "<use href='#r'/>"
+                    & "<text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='#F3D79B'>"
+                    & SWITCH ( _puesto, 1, "I", 2, "II", 3, "III", 4, "IV" ) & "</text>"
+                    & IF (
+                        _alto > 0,
+                        "<path d='M130 150V" & FORMAT ( _y, "0" ) & "' stroke='" & _color & "' stroke-width='2' stroke-dasharray='2 4'/>"
+                            & _rect & "fill='" & _color & "'/>"
+                            & _rect & "fill='url(#g)'/>"
+                            & _rect & "fill='url(#s)'/>"
+                            & "<rect x='87' y='" & FORMAT ( _y, "0" ) & "' width='86' height='2' fill='#fff' fill-opacity='.5'/>"
+                    )
+                    & "<use href='#v'/>"
+                    & "<g transform='translate(122 336) scale(.67)'><path d='" & _glifo & "' fill='none' stroke='" & _color
+                    & "' stroke-width='2.6' stroke-linejoin='round'/></g>"
+                    & "<text x='130' y='370' text-anchor='middle' font-family='Georgia,serif' font-size='17' letter-spacing='3' fill='#EDE6D6'>"
+                    & UPPER ( DimCasa[Casa] ) & "</text>"
+                    & "<text x='130' y='412' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='#F4EEDF'>"
+                    & IF ( _sinDatos, "—", IF ( _p < 0, "−", "" ) & FORMAT ( ABS ( _p ), "#,0" ) ) & "</text>"
+                    & "<text x='130' y='434' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='13' fill='#A39B8C'>"
+                    & _detalle & "</text></g>",
+            "",
+            DimCasa[Orden], ASC
+        )
+    RETURN
+        "data:image/svg+xml;utf8,"
+            & SUBSTITUTE ( "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'>" & _defs & _relojes & "</svg>", "#", "%23" )
+
+// Texto alternativo de los relojes de arena (accesibilidad y tooltip): casa, puntos y puesto.
+[Relojes de Arena (descripción)] =
+    VAR _casas = ADDCOLUMNS ( ALL ( DimCasa ), "@Puntos", COALESCE ( [Puntos Netos], 0 ) )
+    RETURN
+        "Relojes de arena con los puntos netos del período: "
+            & CONCATENATEX (
+                _casas,
+                DimCasa[Casa] & " " & FORMAT ( [@Puntos], "#,0" ) & " puntos ("
+                    & FORMAT ( COUNTROWS ( FILTER ( _casas, [@Puntos] > EARLIER ( [@Puntos] ) ) ) + 1, "0" ) & ".º)",
+                "; ",
+                DimCasa[Orden], ASC
+            )
+
+// SVG dinámico de los estandartes de las casas (Rendimiento de las casas): puesto, puntos netos y variación contra el período anterior en el contexto de filtro, más la identidad fija de cada casa (color, sigilo de su elemento y rasgos). Referencia y pruebas: scripts/svg_estandartes.py.
+[Estandartes de las Casas (SVG)] =
+    VAR _casas =
+        ADDCOLUMNS (
+            ALL ( DimCasa ),
+            "@Puntos", [Puntos Netos],
+            "@Variacion", [Variación vs Período Anterior]
+        )
+    VAR _hayFiltroCasa = ISFILTERED ( DimCasa )
+    VAR _seleccion = VALUES ( DimCasa[CasaKey] )
+    VAR _comparacion = [Período de Comparación]
+    VAR _defs = "<defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='#4A3A1D'/><stop offset='.3' stop-color='#F3D79B'/><stop offset='.55' stop-color='#B08A44'/><stop offset='1' stop-color='#3A2E17'/></linearGradient><linearGradient id='t' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.18'/><stop offset='.5' stop-color='#fff' stop-opacity='0'/><stop offset='1' stop-color='#000' stop-opacity='.4'/></linearGradient><path id='p' d='M24 12H76V98L50 84L24 98Z'/></defs>"
+    VAR _estandartes =
+        CONCATENATEX (
+            _casas,
+            VAR _p = COALESCE ( [@Puntos], 0 )
+            VAR _var = [@Variacion]
+            VAR _puesto = COUNTROWS ( FILTER ( _casas, COALESCE ( [@Puntos], 0 ) > _p ) ) + 1
+            VAR _atenuado = _hayFiltroCasa && NOT ( DimCasa[CasaKey] IN _seleccion )
+            VAR _glifo =
+                SWITCH (
+                    DimCasa[Elemento],
+                    "Fuego", "M12 3.5L21 19.5H3Z",
+                    "Agua", "M12 20.5L3 4.5H21Z",
+                    "Aire", "M12 3.5L21 19.5H3ZM6.6 13.5H17.4",
+                    "Tierra", "M12 20.5L3 4.5H21ZM6.6 10.5H17.4"
+                )
+            VAR _lineaVariacion =
+                IF (
+                    ISBLANK ( _var ),
+                    "<text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='#8F877A'>Sin período previo</text>",
+                    "<text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='"
+                        & SWITCH ( TRUE (), _var > 0, "#86CFA4", _var < 0, "#E8978B", "#B9B1A0" ) & "'>"
+                        & SWITCH ( TRUE (), _var > 0, "▲ +", _var < 0, "▼ −", "= " ) & FORMAT ( ABS ( _var ), "#,0" )
+                        & " <tspan fill='#8F877A'>" & _comparacion & "</tspan></text>"
+                )
+            RETURN
+                "<g transform='translate(" & FORMAT ( ( DimCasa[Orden] - 1 ) * 310, "0" ) & " 0)' opacity='" & IF ( _atenuado, ".3", "1" ) & "'"
+                    & " data-casa='" & DimCasa[CasaKey] & "' data-puntos='" & FORMAT ( _p, "0" ) & "' data-puesto='" & FORMAT ( _puesto, "0" )
+                    & "' data-variacion='" & IF ( ISBLANK ( _var ), "", FORMAT ( _var, "0" ) ) & "'>"
+                    & "<rect x='14' y='8' width='72' height='4' rx='2' fill='url(#b)'/>"
+                    & "<circle cx='14' cy='10' r='4' fill='#F3D79B'/><circle cx='86' cy='10' r='4' fill='#F3D79B'/>"
+                    & "<use href='#p' fill='" & DimCasa[ColorHex] & "'/><use href='#p' fill='url(#t)'/>"
+                    & "<use href='#p' fill='none' stroke='url(#b)' stroke-width='2'/>"
+                    & "<path d='M30 20H70' stroke='#F3D79B' stroke-opacity='.45'/>"
+                    & "<g transform='translate(32 34) scale(1.5)'><path d='" & _glifo & "' fill='none' stroke='#F6E7BE'"
+                    & " stroke-width='1.6' stroke-linejoin='round'/></g>"
+                    & "<text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='#EDE6D6'>" & DimCasa[Casa] & "</text>"
+                    & "<text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='#F3D79B'>"
+                    & SWITCH ( _puesto, 1, "I", 2, "II", 3, "III", 4, "IV" ) & " · <tspan fill='#EDE6D6'>"
+                    & IF ( ISBLANK ( [@Puntos] ), "—", IF ( _p < 0, "−", "" ) & FORMAT ( ABS ( _p ), "#,0" ) ) & " puntos</tspan></text>"
+                    & _lineaVariacion
+                    & "<text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='#8F877A'>"
+                    & DimCasa[Elemento] & " · " & DimCasa[Rasgos] & "</text></g>",
+            "",
+            DimCasa[Orden], ASC
+        )
+    RETURN
+        "data:image/svg+xml;utf8,"
+            & SUBSTITUTE ( "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1240 116'>" & _defs & _estandartes & "</svg>", "#", "%23" )
+
+// SVG dinámico del marcador de la Copa de Quidditch (página Quidditch y Hechizos): una fila por casa, ordenada por [Posición Copa Quidditch], con partidos jugados, victorias, derrotas, puntos a favor y en contra, diferencia y Snitches; al pie, [Partidos], [Partidos Decididos por la Snitch] y [Puntos por Partido], más los tres máximos goleadores ([Goles] por estudiante). Sólo reutiliza medidas existentes. Una casa sin partidos en el contexto muestra "—" y va al final; con el segmentador de casa, las demás se atenúan. Referencia y pruebas: scripts/svg_marcador.py.
+[Marcador de Quidditch (SVG)] =
+    VAR _base =
+        ADDCOLUMNS (
+            ALL ( DimCasa ),
+            "@Jugados", [Partidos Jugados],
+            "@Victorias", [Victorias],
+            "@Derrotas", [Derrotas],
+            "@Favor", [Puntos a Favor],
+            "@Contra", [Puntos en Contra],
+            "@Snitches", [Snitches Atrapadas],
+            "@Puesto", [Posición Copa Quidditch]
+        )
+    -- Orden de las filas: puesto en la Copa; las casas sin partidos van al final, en su orden fijo.
+    VAR _casas = ADDCOLUMNS ( _base, "@Clave", COALESCE ( [@Puesto], 9 ) * 10 + DimCasa[Orden] )
+    VAR _partidos = [Partidos]
+    VAR _hayFiltroCasa = ISFILTERED ( DimCasa )
+    VAR _seleccion = VALUES ( DimCasa[CasaKey] )
+    VAR _fondo = "<defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='#4A3A1D'/><stop offset='.3' stop-color='#F3D79B'/><stop offset='.55' stop-color='#B08A44'/><stop offset='1' stop-color='#3A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='#1C2A3C'/><stop offset='1' stop-color='#0E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(#w)' stroke='url(#b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='#5E4A25' stroke-width='.8'/><g fill='none' stroke='#F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='#EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='#E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='#F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='#A8843F'><text x='28' y='60'>#</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='#5E4A25' stroke-width='1'/>"
+    VAR _resumen =
+        "<path d='M22 192H578' stroke='#5E4A25' stroke-width='.8'/>"
+            & "<text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='#B9B1A0'>"
+            & IF (
+                _partidos > 0,
+                FORMAT ( _partidos, "0" ) & " partidos · <tspan fill='#F3D79B'>" & FORMAT ( [Partidos Decididos por la Snitch], "0" )
+                    & "</tspan> decididos por la Snitch · " & FORMAT ( [Puntos por Partido], "#,0.0" ) & " pts por partido",
+                "Sin partidos en el período seleccionado"
+            )
+            & "</text>"
+    -- Jugadores destacados: los tres máximos goleadores del contexto (desempata el nombre).
+    VAR _goleadores =
+        TOPN (
+            3,
+            FILTER (
+                ADDCOLUMNS ( ALL ( DimEstudiante[Estudiante], DimEstudiante[CasaKey] ), "@Goles", [Goles] ),
+                [@Goles] > 0
+            ),
+            [@Goles], DESC,
+            DimEstudiante[Estudiante], ASC
+        )
+    VAR _lineaGoleadores =
+        "<text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='#EDE6D6'>"
+            & "<tspan fill='#A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> "
+            & IF (
+                ISEMPTY ( _goleadores ),
+                "<tspan fill='#B9B1A0'>sin goles en el período</tspan>",
+                CONCATENATEX (
+                    _goleadores,
+                    "<tspan fill='" & LOOKUPVALUE ( DimCasa[ColorHex], DimCasa[CasaKey], DimEstudiante[CasaKey] ) & "'>●</tspan> "
+                        & DimEstudiante[Estudiante] & " <tspan fill='#F3D79B'>" & FORMAT ( [@Goles], "#,0" ) & "</tspan>",
+                    " · ",
+                    [@Goles], DESC,
+                    DimEstudiante[Estudiante], ASC
+                )
+            )
+            & "</text>"
+    VAR _filas =
+        CONCATENATEX (
+            _casas,
+            VAR _clave = [@Clave]
+            VAR _i = COUNTROWS ( FILTER ( _casas, [@Clave] < _clave ) )
+            VAR _y = 92 + _i * 30
+            VAR _ys = FORMAT ( _y, "0" )
+            VAR _jugo = NOT ISBLANK ( [@Jugados] )
+            VAR _puesto = [@Puesto]
+            VAR _dif = [@Favor] - [@Contra]
+            VAR _color = DimCasa[ColorHex]
+            VAR _atenuado = _hayFiltroCasa && NOT ( DimCasa[CasaKey] IN _seleccion )
+            VAR _glifo =
+                SWITCH (
+                    DimCasa[Elemento],
+                    "Fuego", "M12 3.5L21 19.5H3Z",
+                    "Agua", "M12 20.5L3 4.5H21Z",
+                    "Aire", "M12 3.5L21 19.5H3ZM6.6 13.5H17.4",
+                    "Tierra", "M12 20.5L3 4.5H21ZM6.6 10.5H17.4"
+                )
+            RETURN
+                "<g opacity='" & IF ( _atenuado, ".3", "1" ) & "' data-casa='" & DimCasa[CasaKey]
+                    & "' data-puesto='" & IF ( NOT ISBLANK ( _puesto ), FORMAT ( _puesto, "0" ) )
+                    & "' data-victorias='" & IF ( _jugo, FORMAT ( [@Victorias], "0" ) )
+                    & "' data-favor='" & IF ( _jugo, FORMAT ( [@Favor], "0" ) ) & "'>"
+                    & IF (
+                        _jugo && _puesto = 1,
+                        "<rect x='18' y='" & FORMAT ( _y - 19, "0" ) & "' width='564' height='26' rx='5' fill='#D9B66F' fill-opacity='.12'/>"
+                    )
+                    & "<rect x='18' y='" & FORMAT ( _y - 19, "0" ) & "' width='4' height='26' rx='2' fill='" & _color & "'/>"
+                    & "<circle cx='34' cy='" & FORMAT ( _y - 6, "0" ) & "' r='10' fill='#0E121C' stroke='#A8843F' stroke-width='1.2'/>"
+                    & "<text x='34' y='" & FORMAT ( _y - 2, "0" ) & "' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='#F3D79B'>"
+                    & IF ( ISBLANK ( _puesto ), "—", SWITCH ( _puesto, 1, "I", 2, "II", 3, "III", 4, "IV" ) ) & "</text>"
+                    & "<g transform='translate(52 " & FORMAT ( _y - 15, "0" ) & ") scale(.75)'><path d='" & _glifo & "' fill='none' stroke='" & _color
+                    & "' stroke-width='2.6' stroke-linejoin='round'/></g>"
+                    & "<text x='72' y='" & _ys & "' font-family='Georgia,serif' font-size='16' fill='#EDE6D6'>" & DimCasa[Casa] & "</text>"
+                    & "<g font-family='Segoe UI,sans-serif' font-size='16' fill='#EDE6D6' text-anchor='end'>"
+                    & "<text x='262' y='" & _ys & "'>" & IF ( _jugo, FORMAT ( [@Jugados], "#,0" ), "—" ) & "</text>"
+                    & "<text x='300' y='" & _ys & "' fill='#86CFA4'>" & IF ( _jugo, FORMAT ( [@Victorias], "#,0" ), "—" ) & "</text>"
+                    & "<text x='338' y='" & _ys & "' fill='#E8978B'>" & IF ( _jugo, FORMAT ( [@Derrotas], "#,0" ), "—" ) & "</text>"
+                    & "<text x='408' y='" & _ys & "' font-weight='600'>" & IF ( _jugo, FORMAT ( [@Favor], "#,0" ), "—" ) & "</text>"
+                    & "<text x='482' y='" & _ys & "' fill='#B9B1A0'>" & IF ( _jugo, FORMAT ( [@Contra], "#,0" ), "—" ) & "</text>"
+                    & "<text x='532' y='" & _ys & "' fill='#B9B1A0'>"
+                    & IF ( _jugo, SWITCH ( TRUE (), _dif > 0, "+", _dif < 0, "−", "" ) & FORMAT ( ABS ( _dif ), "#,0" ), "—" ) & "</text>"
+                    & "<text x='578' y='" & _ys & "' fill='#F3D79B'>" & IF ( _jugo, FORMAT ( [@Snitches], "#,0" ), "—" ) & "</text>"
+                    & "</g></g>",
+            "",
+            [@Clave], ASC
+        )
+    RETURN
+        "data:image/svg+xml;utf8,"
+            & SUBSTITUTE ( "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'>" & _fondo & _resumen & _lineaGoleadores & _filas & "</svg>", "#", "%23" )
+
+// Texto alternativo del marcador de Quidditch (accesibilidad): puesto, victorias y puntos a favor de cada casa que jugó.
+[Marcador de Quidditch (descripción)] =
+    VAR _casas =
+        FILTER (
+            ADDCOLUMNS (
+                ALL ( DimCasa ),
+                "@Jugados", [Partidos Jugados],
+                "@Victorias", [Victorias],
+                "@Favor", [Puntos a Favor],
+                "@Puesto", [Posición Copa Quidditch]
+            ),
+            NOT ISBLANK ( [@Jugados] )
+        )
+    RETURN
+        "Marcador de la Copa de Quidditch: "
+            & IF (
+                ISEMPTY ( _casas ),
+                "sin partidos en el período seleccionado",
+                CONCATENATEX (
+                    _casas,
+                    FORMAT ( [@Puesto], "0" ) & ".º " & DimCasa[Casa] & ", " & FORMAT ( [@Victorias], "#,0" ) & " victorias de "
+                        & FORMAT ( [@Jugados], "#,0" ) & ", " & FORMAT ( [@Favor], "#,0" ) & " puntos a favor",
+                    "; ",
+                    [@Puesto], ASC,
+                    DimCasa[Orden], ASC
+                )
+            )
+
+// ── 9. Calidad de datos ─────────────────────────────────────────
+
+// Debe ser 0: puntos de casa por Quidditch menos 50 × victorias en el mismo contexto. Verifica la consistencia entre el libro de puntos y los partidos.
+[Control Quidditch (debe ser 0)] =
+    COALESCE ( CALCULATE ( [Puntos Netos], DimCategoria[CategoriaKey] = "quidditch" ), 0 ) - 50 * COALESCE ( [Victorias], 0 )
+// Formato: 0
+
+// Cantidad de controles de calidad en estado "Revisar".
+[Controles con Problemas] =
+    COALESCE ( CALCULATE ( COUNTROWS ( ControlCalidad ), ControlCalidad[Estado] = "Revisar" ), 0 )
+// Formato: 0
+
+// Resumen legible del estado de calidad de datos.
+[Estado de Calidad] =
+    VAR _total = COUNTROWS ( ControlCalidad )
+    VAR _problemas = [Controles con Problemas]
+    RETURN
+        IF (
+            _problemas = 0,
+            "✔ " & _total & " controles de calidad superados",
+            "⚠ " & _problemas & " de " & _total & " controles a revisar"
+        )

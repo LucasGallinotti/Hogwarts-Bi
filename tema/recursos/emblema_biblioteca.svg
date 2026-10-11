@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Emblema original: libro abierto con estrella y destellos. -->
+  <defs>
+    <linearGradient id="pagina" x1="0" x2="1">
+      <stop offset="0" stop-color="#EDE2C4"/>
+      <stop offset="1" stop-color="#C9B88F"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="29" fill="#111625" stroke="#A8843F" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="25" fill="none" stroke="#5E4A25" stroke-width="0.8"/>
+  <path d="M12 40 C18 36 26 36 32 40 L32 22 C26 18 18 18 12 22 Z" fill="url(#pagina)"/>
+  <path d="M52 40 C46 36 38 36 32 40 L32 22 C38 18 46 18 52 22 Z" fill="url(#pagina)" opacity="0.9"/>
+  <path d="M32 22 V40" stroke="#6B5022" stroke-width="1"/>
+  <path d="M16 26 C20 24 25 24 29 26 M16 30 C20 28 25 28 29 30 M35 26 C39 24 44 24 48 26 M35 30 C39 28 44 28 48 30" fill="none" stroke="#8C7A55" stroke-width="0.8"/>
+  <path d="M10 42 C18 38 26 38 32 42 C38 38 46 38 54 42" fill="none" stroke="#A8843F" stroke-width="1.4"/>
+  <path d="M32 6 L34 12 L40 14 L34 16 L32 22 L30 16 L24 14 L30 12 Z" fill="#F3D79B"/>
+  <circle cx="45" cy="13" r="1.2" fill="#F3D79B"/><circle cx="19" cy="15" r="1" fill="#F3D79B" opacity="0.8"/>
+</svg>

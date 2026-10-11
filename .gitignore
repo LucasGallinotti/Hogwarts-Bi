@@ -1,0 +1,10 @@
+# Archivos locales que Power BI Desktop genera al abrir el proyecto
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Salidas de ejecución y archivos binarios
+__pycache__/
+*.pyc
+respaldos/
+validacion/resultados_dax.json
+scripts/exportar_csv.py

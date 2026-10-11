@@ -1,0 +1,16 @@
+curso,cursoLabel,term,termName,firstWeek,lastWeek,termStartDate,schoolYear
+1,Curso I,otono,Otoño,1,12,2021-09-06,2021-22
+1,Curso I,invierno,Invierno,13,24,2022-01-03,2021-22
+1,Curso I,primavera,Primavera,25,36,2022-04-04,2021-22
+2,Curso II,otono,Otoño,1,12,2022-09-05,2022-23
+2,Curso II,invierno,Invierno,13,24,2023-01-02,2022-23
+2,Curso II,primavera,Primavera,25,36,2023-04-03,2022-23
+3,Curso III,otono,Otoño,1,12,2023-09-04,2023-24
+3,Curso III,invierno,Invierno,13,24,2024-01-01,2023-24
+3,Curso III,primavera,Primavera,25,36,2024-04-01,2023-24
+4,Curso IV,otono,Otoño,1,12,2024-09-02,2024-25
+4,Curso IV,invierno,Invierno,13,24,2025-01-06,2024-25
+4,Curso IV,primavera,Primavera,25,36,2025-04-07,2024-25
+5,Curso V,otono,Otoño,1,12,2025-09-01,2025-26
+5,Curso V,invierno,Invierno,13,24,2026-01-05,2025-26
+5,Curso V,primavera,Primavera,25,36,2026-04-06,2025-26

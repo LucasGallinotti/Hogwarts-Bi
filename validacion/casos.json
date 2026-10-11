@@ -1,0 +1,3703 @@
+[
+ {
+  "id": "filas-por-tabla",
+  "descripcion": "Cantidad de filas cargadas en cada tabla",
+  "dax": "EVALUATE UNION ( ROW ( \"Tabla\", \"DimTrimestre\", \"Filas\", COUNTROWS ( DimTrimestre ) ), ROW ( \"Tabla\", \"DimSemana\", \"Filas\", COUNTROWS ( DimSemana ) ), ROW ( \"Tabla\", \"DimCasa\", \"Filas\", COUNTROWS ( DimCasa ) ), ROW ( \"Tabla\", \"DimEstudiante\", \"Filas\", COUNTROWS ( DimEstudiante ) ), ROW ( \"Tabla\", \"DimCategoria\", \"Filas\", COUNTROWS ( DimCategoria ) ), ROW ( \"Tabla\", \"DimHechizo\", \"Filas\", COUNTROWS ( DimHechizo ) ), ROW ( \"Tabla\", \"DimPartido\", \"Filas\", COUNTROWS ( DimPartido ) ), ROW ( \"Tabla\", \"FactPuntos\", \"Filas\", COUNTROWS ( FactPuntos ) ), ROW ( \"Tabla\", \"FactPartidoEquipo\", \"Filas\", COUNTROWS ( FactPartidoEquipo ) ), ROW ( \"Tabla\", \"FactGoles\", \"Filas\", COUNTROWS ( FactGoles ) ), ROW ( \"Tabla\", \"FactPracticas\", \"Filas\", COUNTROWS ( FactPracticas ) ) )",
+  "claves": [
+   "Tabla"
+  ],
+  "esperado": [
+   {
+    "Tabla": "DimTrimestre",
+    "Filas": 15
+   },
+   {
+    "Tabla": "DimSemana",
+    "Filas": 180
+   },
+   {
+    "Tabla": "DimCasa",
+    "Filas": 4
+   },
+   {
+    "Tabla": "DimEstudiante",
+    "Filas": 49
+   },
+   {
+    "Tabla": "DimCategoria",
+    "Filas": 5
+   },
+   {
+    "Tabla": "DimHechizo",
+    "Filas": 33
+   },
+   {
+    "Tabla": "DimPartido",
+    "Filas": 30
+   },
+   {
+    "Tabla": "FactPuntos",
+    "Filas": 1709
+   },
+   {
+    "Tabla": "FactPartidoEquipo",
+    "Filas": 60
+   },
+   {
+    "Tabla": "FactGoles",
+    "Filas": 157
+   },
+   {
+    "Tabla": "FactPracticas",
+    "Filas": 1980
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "puntos-casa-curso",
+  "descripcion": "Puntos netos, otorgados y descontados por casa y curso",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], DimCasa[CasaKey],\n        \"netos\", [Puntos Netos], \"otorgados\", [Puntos Otorgados], \"descontados\", [Puntos Descontados] )",
+  "claves": [
+   "CursoNumero",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "CasaKey": "gryffindor",
+    "netos": 520,
+    "otorgados": 895,
+    "descontados": 375
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "slytherin",
+    "netos": 535,
+    "otorgados": 820,
+    "descontados": 285
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "ravenclaw",
+    "netos": 755,
+    "otorgados": 1130,
+    "descontados": 375
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "hufflepuff",
+    "netos": 770,
+    "otorgados": 950,
+    "descontados": 180
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "gryffindor",
+    "netos": 780,
+    "otorgados": 1270,
+    "descontados": 490
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "slytherin",
+    "netos": 485,
+    "otorgados": 910,
+    "descontados": 425
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "ravenclaw",
+    "netos": 630,
+    "otorgados": 800,
+    "descontados": 170
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "hufflepuff",
+    "netos": 905,
+    "otorgados": 1090,
+    "descontados": 185
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "gryffindor",
+    "netos": 1015,
+    "otorgados": 1370,
+    "descontados": 355
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "slytherin",
+    "netos": 525,
+    "otorgados": 895,
+    "descontados": 370
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "ravenclaw",
+    "netos": 910,
+    "otorgados": 1080,
+    "descontados": 170
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "hufflepuff",
+    "netos": 515,
+    "otorgados": 635,
+    "descontados": 120
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "gryffindor",
+    "netos": 870,
+    "otorgados": 1185,
+    "descontados": 315
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "slytherin",
+    "netos": 815,
+    "otorgados": 1235,
+    "descontados": 420
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "ravenclaw",
+    "netos": 1015,
+    "otorgados": 1120,
+    "descontados": 105
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "hufflepuff",
+    "netos": 655,
+    "otorgados": 730,
+    "descontados": 75
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "gryffindor",
+    "netos": 575,
+    "otorgados": 985,
+    "descontados": 410
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "slytherin",
+    "netos": 780,
+    "otorgados": 1135,
+    "descontados": 355
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "ravenclaw",
+    "netos": 670,
+    "otorgados": 960,
+    "descontados": 290
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "hufflepuff",
+    "netos": 710,
+    "otorgados": 770,
+    "descontados": 60
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "posicion-curso",
+  "descripcion": "Posición de cada casa en la Copa de cada curso (empates comparten puesto)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], DimCasa[CasaKey], \"pos\", [Posición] )",
+  "claves": [
+   "CursoNumero",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "CasaKey": "gryffindor",
+    "pos": 4
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "slytherin",
+    "pos": 3
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "ravenclaw",
+    "pos": 2
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "hufflepuff",
+    "pos": 1
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "gryffindor",
+    "pos": 2
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "slytherin",
+    "pos": 4
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "ravenclaw",
+    "pos": 3
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "hufflepuff",
+    "pos": 1
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "gryffindor",
+    "pos": 1
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "slytherin",
+    "pos": 3
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "ravenclaw",
+    "pos": 2
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "hufflepuff",
+    "pos": 4
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "gryffindor",
+    "pos": 2
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "slytherin",
+    "pos": 3
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "ravenclaw",
+    "pos": 1
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "hufflepuff",
+    "pos": 4
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "gryffindor",
+    "pos": 4
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "slytherin",
+    "pos": 1
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "ravenclaw",
+    "pos": 3
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "hufflepuff",
+    "pos": 2
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "lider-curso",
+  "descripcion": "Casa líder, puntos del líder y ventaja sobre el segundo por curso",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], \"lider\", [Casa Líder], \"ventaja\", [Ventaja del Líder], \"maximo\", [Puntos del Líder] )",
+  "claves": [
+   "CursoNumero"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "lider": "Hufflepuff",
+    "ventaja": 15,
+    "maximo": 770
+   },
+   {
+    "CursoNumero": 2,
+    "lider": "Hufflepuff",
+    "ventaja": 125,
+    "maximo": 905
+   },
+   {
+    "CursoNumero": 3,
+    "lider": "Gryffindor",
+    "ventaja": 105,
+    "maximo": 1015
+   },
+   {
+    "CursoNumero": 4,
+    "lider": "Ravenclaw",
+    "ventaja": 145,
+    "maximo": 1015
+   },
+   {
+    "CursoNumero": 5,
+    "lider": "Slytherin",
+    "ventaja": 70,
+    "maximo": 780
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "ranking-por-nombre-de-casa",
+  "descripcion": "Matriz del informe: puesto y distancia al líder agrupando por DimCasa[Casa] y DimTrimestre[Curso]",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[Curso], DimCasa[Casa], \"pos\", [Posición], \"al_lider\", [Distancia al Líder] )",
+  "claves": [
+   "Curso",
+   "Casa"
+  ],
+  "esperado": [
+   {
+    "Curso": "Curso I",
+    "Casa": "Gryffindor",
+    "pos": 4,
+    "al_lider": 250
+   },
+   {
+    "Curso": "Curso I",
+    "Casa": "Slytherin",
+    "pos": 3,
+    "al_lider": 235
+   },
+   {
+    "Curso": "Curso I",
+    "Casa": "Ravenclaw",
+    "pos": 2,
+    "al_lider": 15
+   },
+   {
+    "Curso": "Curso I",
+    "Casa": "Hufflepuff",
+    "pos": 1,
+    "al_lider": 0
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Gryffindor",
+    "pos": 2,
+    "al_lider": 125
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Slytherin",
+    "pos": 4,
+    "al_lider": 420
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Ravenclaw",
+    "pos": 3,
+    "al_lider": 275
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Hufflepuff",
+    "pos": 1,
+    "al_lider": 0
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Gryffindor",
+    "pos": 1,
+    "al_lider": 0
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Slytherin",
+    "pos": 3,
+    "al_lider": 490
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Ravenclaw",
+    "pos": 2,
+    "al_lider": 105
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Hufflepuff",
+    "pos": 4,
+    "al_lider": 500
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Gryffindor",
+    "pos": 2,
+    "al_lider": 145
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Slytherin",
+    "pos": 3,
+    "al_lider": 200
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Ravenclaw",
+    "pos": 1,
+    "al_lider": 0
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Hufflepuff",
+    "pos": 4,
+    "al_lider": 360
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Gryffindor",
+    "pos": 4,
+    "al_lider": 205
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Slytherin",
+    "pos": 1,
+    "al_lider": 0
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Ravenclaw",
+    "pos": 3,
+    "al_lider": 110
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Hufflepuff",
+    "pos": 2,
+    "al_lider": 70
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "lider-con-filtro-de-casa",
+  "descripcion": "Con el segmentador de casa en Gryffindor, el líder y la ventaja siguen comparando contra las cuatro casas",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"pos\", [Posición], \"maximo\", [Puntos del Líder], \"ventaja\", [Ventaja del Líder], \"lider\", [Casa Líder] ),\n        TREATAS ( { \"Gryffindor\" }, DimCasa[Casa] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "pos": 4,
+    "maximo": 780,
+    "ventaja": 70,
+    "lider": "Slytherin"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "periodo-anterior-trimestre",
+  "descripcion": "Puntos del trimestre anterior y variaciones (el Otoño compara con la Primavera del curso previo)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], DimTrimestre[TrimestreOrden], DimCasa[CasaKey],\n        \"anterior\", [Puntos Período Anterior], \"variacion\", [Variación vs Período Anterior], \"variacion_pct\", [Variación % vs Período Anterior] )",
+  "claves": [
+   "CursoNumero",
+   "TrimestreOrden",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 1,
+    "CasaKey": "gryffindor",
+    "anterior": null,
+    "variacion": null,
+    "variacion_pct": null
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 1,
+    "CasaKey": "slytherin",
+    "anterior": null,
+    "variacion": null,
+    "variacion_pct": null
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 1,
+    "CasaKey": "ravenclaw",
+    "anterior": null,
+    "variacion": null,
+    "variacion_pct": null
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 1,
+    "CasaKey": "hufflepuff",
+    "anterior": null,
+    "variacion": null,
+    "variacion_pct": null
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 2,
+    "CasaKey": "gryffindor",
+    "anterior": 175,
+    "variacion": -55,
+    "variacion_pct": -0.3142857142857143
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 2,
+    "CasaKey": "slytherin",
+    "anterior": 150,
+    "variacion": 15,
+    "variacion_pct": 0.1
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 2,
+    "CasaKey": "ravenclaw",
+    "anterior": 215,
+    "variacion": 90,
+    "variacion_pct": 0.4186046511627907
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 2,
+    "CasaKey": "hufflepuff",
+    "anterior": 135,
+    "variacion": 295,
+    "variacion_pct": 2.185185185185185
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 3,
+    "CasaKey": "gryffindor",
+    "anterior": 120,
+    "variacion": 105,
+    "variacion_pct": 0.875
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 3,
+    "CasaKey": "slytherin",
+    "anterior": 165,
+    "variacion": 55,
+    "variacion_pct": 0.3333333333333333
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 3,
+    "CasaKey": "ravenclaw",
+    "anterior": 305,
+    "variacion": -70,
+    "variacion_pct": -0.22950819672131148
+   },
+   {
+    "CursoNumero": 1,
+    "TrimestreOrden": 3,
+    "CasaKey": "hufflepuff",
+    "anterior": 430,
+    "variacion": -225,
+    "variacion_pct": -0.5232558139534884
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 1,
+    "CasaKey": "gryffindor",
+    "anterior": 225,
+    "variacion": -25,
+    "variacion_pct": -0.1111111111111111
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 1,
+    "CasaKey": "slytherin",
+    "anterior": 220,
+    "variacion": -80,
+    "variacion_pct": -0.36363636363636365
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 1,
+    "CasaKey": "ravenclaw",
+    "anterior": 235,
+    "variacion": -25,
+    "variacion_pct": -0.10638297872340426
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 1,
+    "CasaKey": "hufflepuff",
+    "anterior": 205,
+    "variacion": 65,
+    "variacion_pct": 0.3170731707317073
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 2,
+    "CasaKey": "gryffindor",
+    "anterior": 200,
+    "variacion": 75,
+    "variacion_pct": 0.375
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 2,
+    "CasaKey": "slytherin",
+    "anterior": 140,
+    "variacion": -5,
+    "variacion_pct": -0.03571428571428571
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 2,
+    "CasaKey": "ravenclaw",
+    "anterior": 210,
+    "variacion": 20,
+    "variacion_pct": 0.09523809523809523
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 2,
+    "CasaKey": "hufflepuff",
+    "anterior": 270,
+    "variacion": 45,
+    "variacion_pct": 0.16666666666666666
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 3,
+    "CasaKey": "gryffindor",
+    "anterior": 275,
+    "variacion": 30,
+    "variacion_pct": 0.10909090909090909
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 3,
+    "CasaKey": "slytherin",
+    "anterior": 135,
+    "variacion": 75,
+    "variacion_pct": 0.5555555555555556
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 3,
+    "CasaKey": "ravenclaw",
+    "anterior": 230,
+    "variacion": -40,
+    "variacion_pct": -0.17391304347826086
+   },
+   {
+    "CursoNumero": 2,
+    "TrimestreOrden": 3,
+    "CasaKey": "hufflepuff",
+    "anterior": 315,
+    "variacion": 5,
+    "variacion_pct": 0.015873015873015872
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 1,
+    "CasaKey": "gryffindor",
+    "anterior": 305,
+    "variacion": -295,
+    "variacion_pct": -0.9672131147540983
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 1,
+    "CasaKey": "slytherin",
+    "anterior": 210,
+    "variacion": 55,
+    "variacion_pct": 0.2619047619047619
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 1,
+    "CasaKey": "ravenclaw",
+    "anterior": 190,
+    "variacion": 165,
+    "variacion_pct": 0.868421052631579
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 1,
+    "CasaKey": "hufflepuff",
+    "anterior": 320,
+    "variacion": -75,
+    "variacion_pct": -0.234375
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 2,
+    "CasaKey": "gryffindor",
+    "anterior": 10,
+    "variacion": 490,
+    "variacion_pct": 49.0
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 2,
+    "CasaKey": "slytherin",
+    "anterior": 265,
+    "variacion": -240,
+    "variacion_pct": -0.9056603773584906
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 2,
+    "CasaKey": "ravenclaw",
+    "anterior": 355,
+    "variacion": -80,
+    "variacion_pct": -0.22535211267605634
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 2,
+    "CasaKey": "hufflepuff",
+    "anterior": 245,
+    "variacion": -90,
+    "variacion_pct": -0.3673469387755102
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 3,
+    "CasaKey": "gryffindor",
+    "anterior": 500,
+    "variacion": 5,
+    "variacion_pct": 0.01
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 3,
+    "CasaKey": "slytherin",
+    "anterior": 25,
+    "variacion": 210,
+    "variacion_pct": 8.4
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 3,
+    "CasaKey": "ravenclaw",
+    "anterior": 275,
+    "variacion": 5,
+    "variacion_pct": 0.01818181818181818
+   },
+   {
+    "CursoNumero": 3,
+    "TrimestreOrden": 3,
+    "CasaKey": "hufflepuff",
+    "anterior": 155,
+    "variacion": -40,
+    "variacion_pct": -0.25806451612903225
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 1,
+    "CasaKey": "gryffindor",
+    "anterior": 505,
+    "variacion": -210,
+    "variacion_pct": -0.4158415841584158
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 1,
+    "CasaKey": "slytherin",
+    "anterior": 235,
+    "variacion": -85,
+    "variacion_pct": -0.3617021276595745
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 1,
+    "CasaKey": "ravenclaw",
+    "anterior": 280,
+    "variacion": -15,
+    "variacion_pct": -0.05357142857142857
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 1,
+    "CasaKey": "hufflepuff",
+    "anterior": 115,
+    "variacion": 115,
+    "variacion_pct": 1.0
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 2,
+    "CasaKey": "gryffindor",
+    "anterior": 295,
+    "variacion": -15,
+    "variacion_pct": -0.05084745762711865
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 2,
+    "CasaKey": "slytherin",
+    "anterior": 150,
+    "variacion": -5,
+    "variacion_pct": -0.03333333333333333
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 2,
+    "CasaKey": "ravenclaw",
+    "anterior": 265,
+    "variacion": 35,
+    "variacion_pct": 0.1320754716981132
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 2,
+    "CasaKey": "hufflepuff",
+    "anterior": 230,
+    "variacion": -5,
+    "variacion_pct": -0.021739130434782608
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 3,
+    "CasaKey": "gryffindor",
+    "anterior": 280,
+    "variacion": 15,
+    "variacion_pct": 0.05357142857142857
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 3,
+    "CasaKey": "slytherin",
+    "anterior": 145,
+    "variacion": 375,
+    "variacion_pct": 2.586206896551724
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 3,
+    "CasaKey": "ravenclaw",
+    "anterior": 300,
+    "variacion": 150,
+    "variacion_pct": 0.5
+   },
+   {
+    "CursoNumero": 4,
+    "TrimestreOrden": 3,
+    "CasaKey": "hufflepuff",
+    "anterior": 225,
+    "variacion": -25,
+    "variacion_pct": -0.1111111111111111
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 1,
+    "CasaKey": "gryffindor",
+    "anterior": 295,
+    "variacion": -40,
+    "variacion_pct": -0.13559322033898305
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 1,
+    "CasaKey": "slytherin",
+    "anterior": 520,
+    "variacion": -375,
+    "variacion_pct": -0.7211538461538461
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 1,
+    "CasaKey": "ravenclaw",
+    "anterior": 450,
+    "variacion": -175,
+    "variacion_pct": -0.3888888888888889
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 1,
+    "CasaKey": "hufflepuff",
+    "anterior": 200,
+    "variacion": 15,
+    "variacion_pct": 0.075
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 2,
+    "CasaKey": "gryffindor",
+    "anterior": 255,
+    "variacion": -160,
+    "variacion_pct": -0.6274509803921569
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 2,
+    "CasaKey": "slytherin",
+    "anterior": 145,
+    "variacion": 60,
+    "variacion_pct": 0.41379310344827586
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 2,
+    "CasaKey": "ravenclaw",
+    "anterior": 275,
+    "variacion": -45,
+    "variacion_pct": -0.16363636363636364
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 2,
+    "CasaKey": "hufflepuff",
+    "anterior": 215,
+    "variacion": 5,
+    "variacion_pct": 0.023255813953488372
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 3,
+    "CasaKey": "gryffindor",
+    "anterior": 95,
+    "variacion": 130,
+    "variacion_pct": 1.368421052631579
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 3,
+    "CasaKey": "slytherin",
+    "anterior": 205,
+    "variacion": 225,
+    "variacion_pct": 1.0975609756097562
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 3,
+    "CasaKey": "ravenclaw",
+    "anterior": 230,
+    "variacion": -65,
+    "variacion_pct": -0.2826086956521739
+   },
+   {
+    "CursoNumero": 5,
+    "TrimestreOrden": 3,
+    "CasaKey": "hufflepuff",
+    "anterior": 220,
+    "variacion": 55,
+    "variacion_pct": 0.25
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "periodo-anterior-curso",
+  "descripcion": "Curso contra curso anterior: puntos y cambio de posición en el ranking",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], DimCasa[CasaKey], \"anterior\", [Puntos Período Anterior], \"cambio\", [Cambio de Posición] )",
+  "claves": [
+   "CursoNumero",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "CasaKey": "gryffindor",
+    "anterior": null,
+    "cambio": null
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "slytherin",
+    "anterior": null,
+    "cambio": null
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "ravenclaw",
+    "anterior": null,
+    "cambio": null
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "hufflepuff",
+    "anterior": null,
+    "cambio": null
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "gryffindor",
+    "anterior": 520,
+    "cambio": 2
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "slytherin",
+    "anterior": 535,
+    "cambio": -1
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "ravenclaw",
+    "anterior": 755,
+    "cambio": -1
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "hufflepuff",
+    "anterior": 770,
+    "cambio": 0
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "gryffindor",
+    "anterior": 780,
+    "cambio": 1
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "slytherin",
+    "anterior": 485,
+    "cambio": 1
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "ravenclaw",
+    "anterior": 630,
+    "cambio": 1
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "hufflepuff",
+    "anterior": 905,
+    "cambio": -3
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "gryffindor",
+    "anterior": 1015,
+    "cambio": -1
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "slytherin",
+    "anterior": 525,
+    "cambio": 0
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "ravenclaw",
+    "anterior": 910,
+    "cambio": 1
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "hufflepuff",
+    "anterior": 515,
+    "cambio": 0
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "gryffindor",
+    "anterior": 870,
+    "cambio": -2
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "slytherin",
+    "anterior": 815,
+    "cambio": 2
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "ravenclaw",
+    "anterior": 1015,
+    "cambio": -2
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "hufflepuff",
+    "anterior": 655,
+    "cambio": 2
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "periodo-anterior-mismos-trimestres",
+  "descripcion": "Curso V con Otoño + Invierno se compara con Otoño + Invierno del Curso IV",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimCasa[CasaKey], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ),\n        TREATAS ( { 1, 2 }, DimTrimestre[TrimestreOrden] ), \"anterior\", [Puntos Período Anterior] )",
+  "claves": [
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "gryffindor",
+    "anterior": 575
+   },
+   {
+    "CasaKey": "slytherin",
+    "anterior": 295
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "anterior": 565
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "anterior": 455
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "acumulado-curso-v",
+  "descripcion": "Puntos acumulados por semana en el Curso V (eje SemanaCurso)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimSemana[SemanaCurso], DimCasa[CasaKey], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), \"acum\", [Puntos Acumulados] )",
+  "claves": [
+   "SemanaCurso",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "SemanaCurso": 1,
+    "CasaKey": "gryffindor",
+    "acum": 35
+   },
+   {
+    "SemanaCurso": 2,
+    "CasaKey": "gryffindor",
+    "acum": 20
+   },
+   {
+    "SemanaCurso": 3,
+    "CasaKey": "gryffindor",
+    "acum": 70
+   },
+   {
+    "SemanaCurso": 4,
+    "CasaKey": "gryffindor",
+    "acum": 65
+   },
+   {
+    "SemanaCurso": 5,
+    "CasaKey": "gryffindor",
+    "acum": 115
+   },
+   {
+    "SemanaCurso": 6,
+    "CasaKey": "gryffindor",
+    "acum": 140
+   },
+   {
+    "SemanaCurso": 7,
+    "CasaKey": "gryffindor",
+    "acum": 215
+   },
+   {
+    "SemanaCurso": 8,
+    "CasaKey": "gryffindor",
+    "acum": 210
+   },
+   {
+    "SemanaCurso": 9,
+    "CasaKey": "gryffindor",
+    "acum": 165
+   },
+   {
+    "SemanaCurso": 10,
+    "CasaKey": "gryffindor",
+    "acum": 205
+   },
+   {
+    "SemanaCurso": 11,
+    "CasaKey": "gryffindor",
+    "acum": 255
+   },
+   {
+    "SemanaCurso": 12,
+    "CasaKey": "gryffindor",
+    "acum": 255
+   },
+   {
+    "SemanaCurso": 13,
+    "CasaKey": "gryffindor",
+    "acum": 275
+   },
+   {
+    "SemanaCurso": 14,
+    "CasaKey": "gryffindor",
+    "acum": 255
+   },
+   {
+    "SemanaCurso": 15,
+    "CasaKey": "gryffindor",
+    "acum": 250
+   },
+   {
+    "SemanaCurso": 16,
+    "CasaKey": "gryffindor",
+    "acum": 300
+   },
+   {
+    "SemanaCurso": 17,
+    "CasaKey": "gryffindor",
+    "acum": 240
+   },
+   {
+    "SemanaCurso": 18,
+    "CasaKey": "gryffindor",
+    "acum": 240
+   },
+   {
+    "SemanaCurso": 19,
+    "CasaKey": "gryffindor",
+    "acum": 250
+   },
+   {
+    "SemanaCurso": 20,
+    "CasaKey": "gryffindor",
+    "acum": 275
+   },
+   {
+    "SemanaCurso": 21,
+    "CasaKey": "gryffindor",
+    "acum": 245
+   },
+   {
+    "SemanaCurso": 22,
+    "CasaKey": "gryffindor",
+    "acum": 270
+   },
+   {
+    "SemanaCurso": 23,
+    "CasaKey": "gryffindor",
+    "acum": 285
+   },
+   {
+    "SemanaCurso": 24,
+    "CasaKey": "gryffindor",
+    "acum": 350
+   },
+   {
+    "SemanaCurso": 25,
+    "CasaKey": "gryffindor",
+    "acum": 340
+   },
+   {
+    "SemanaCurso": 26,
+    "CasaKey": "gryffindor",
+    "acum": 365
+   },
+   {
+    "SemanaCurso": 27,
+    "CasaKey": "gryffindor",
+    "acum": 390
+   },
+   {
+    "SemanaCurso": 28,
+    "CasaKey": "gryffindor",
+    "acum": 400
+   },
+   {
+    "SemanaCurso": 29,
+    "CasaKey": "gryffindor",
+    "acum": 440
+   },
+   {
+    "SemanaCurso": 30,
+    "CasaKey": "gryffindor",
+    "acum": 435
+   },
+   {
+    "SemanaCurso": 31,
+    "CasaKey": "gryffindor",
+    "acum": 455
+   },
+   {
+    "SemanaCurso": 32,
+    "CasaKey": "gryffindor",
+    "acum": 460
+   },
+   {
+    "SemanaCurso": 33,
+    "CasaKey": "gryffindor",
+    "acum": 500
+   },
+   {
+    "SemanaCurso": 34,
+    "CasaKey": "gryffindor",
+    "acum": 510
+   },
+   {
+    "SemanaCurso": 35,
+    "CasaKey": "gryffindor",
+    "acum": 540
+   },
+   {
+    "SemanaCurso": 36,
+    "CasaKey": "gryffindor",
+    "acum": 575
+   },
+   {
+    "SemanaCurso": 1,
+    "CasaKey": "slytherin",
+    "acum": 20
+   },
+   {
+    "SemanaCurso": 2,
+    "CasaKey": "slytherin",
+    "acum": 30
+   },
+   {
+    "SemanaCurso": 3,
+    "CasaKey": "slytherin",
+    "acum": 45
+   },
+   {
+    "SemanaCurso": 4,
+    "CasaKey": "slytherin",
+    "acum": 65
+   },
+   {
+    "SemanaCurso": 5,
+    "CasaKey": "slytherin",
+    "acum": 100
+   },
+   {
+    "SemanaCurso": 6,
+    "CasaKey": "slytherin",
+    "acum": 60
+   },
+   {
+    "SemanaCurso": 7,
+    "CasaKey": "slytherin",
+    "acum": 60
+   },
+   {
+    "SemanaCurso": 8,
+    "CasaKey": "slytherin",
+    "acum": 70
+   },
+   {
+    "SemanaCurso": 9,
+    "CasaKey": "slytherin",
+    "acum": 75
+   },
+   {
+    "SemanaCurso": 10,
+    "CasaKey": "slytherin",
+    "acum": 75
+   },
+   {
+    "SemanaCurso": 11,
+    "CasaKey": "slytherin",
+    "acum": 140
+   },
+   {
+    "SemanaCurso": 12,
+    "CasaKey": "slytherin",
+    "acum": 145
+   },
+   {
+    "SemanaCurso": 13,
+    "CasaKey": "slytherin",
+    "acum": 200
+   },
+   {
+    "SemanaCurso": 14,
+    "CasaKey": "slytherin",
+    "acum": 285
+   },
+   {
+    "SemanaCurso": 15,
+    "CasaKey": "slytherin",
+    "acum": 285
+   },
+   {
+    "SemanaCurso": 16,
+    "CasaKey": "slytherin",
+    "acum": 305
+   },
+   {
+    "SemanaCurso": 17,
+    "CasaKey": "slytherin",
+    "acum": 335
+   },
+   {
+    "SemanaCurso": 18,
+    "CasaKey": "slytherin",
+    "acum": 345
+   },
+   {
+    "SemanaCurso": 19,
+    "CasaKey": "slytherin",
+    "acum": 330
+   },
+   {
+    "SemanaCurso": 20,
+    "CasaKey": "slytherin",
+    "acum": 360
+   },
+   {
+    "SemanaCurso": 21,
+    "CasaKey": "slytherin",
+    "acum": 335
+   },
+   {
+    "SemanaCurso": 22,
+    "CasaKey": "slytherin",
+    "acum": 365
+   },
+   {
+    "SemanaCurso": 23,
+    "CasaKey": "slytherin",
+    "acum": 380
+   },
+   {
+    "SemanaCurso": 24,
+    "CasaKey": "slytherin",
+    "acum": 350
+   },
+   {
+    "SemanaCurso": 25,
+    "CasaKey": "slytherin",
+    "acum": 360
+   },
+   {
+    "SemanaCurso": 26,
+    "CasaKey": "slytherin",
+    "acum": 400
+   },
+   {
+    "SemanaCurso": 27,
+    "CasaKey": "slytherin",
+    "acum": 445
+   },
+   {
+    "SemanaCurso": 28,
+    "CasaKey": "slytherin",
+    "acum": 495
+   },
+   {
+    "SemanaCurso": 29,
+    "CasaKey": "slytherin",
+    "acum": 535
+   },
+   {
+    "SemanaCurso": 30,
+    "CasaKey": "slytherin",
+    "acum": 595
+   },
+   {
+    "SemanaCurso": 31,
+    "CasaKey": "slytherin",
+    "acum": 585
+   },
+   {
+    "SemanaCurso": 32,
+    "CasaKey": "slytherin",
+    "acum": 625
+   },
+   {
+    "SemanaCurso": 33,
+    "CasaKey": "slytherin",
+    "acum": 680
+   },
+   {
+    "SemanaCurso": 34,
+    "CasaKey": "slytherin",
+    "acum": 755
+   },
+   {
+    "SemanaCurso": 35,
+    "CasaKey": "slytherin",
+    "acum": 765
+   },
+   {
+    "SemanaCurso": 36,
+    "CasaKey": "slytherin",
+    "acum": 780
+   },
+   {
+    "SemanaCurso": 1,
+    "CasaKey": "ravenclaw",
+    "acum": 15
+   },
+   {
+    "SemanaCurso": 2,
+    "CasaKey": "ravenclaw",
+    "acum": 25
+   },
+   {
+    "SemanaCurso": 3,
+    "CasaKey": "ravenclaw",
+    "acum": 25
+   },
+   {
+    "SemanaCurso": 4,
+    "CasaKey": "ravenclaw",
+    "acum": 100
+   },
+   {
+    "SemanaCurso": 5,
+    "CasaKey": "ravenclaw",
+    "acum": 130
+   },
+   {
+    "SemanaCurso": 6,
+    "CasaKey": "ravenclaw",
+    "acum": 160
+   },
+   {
+    "SemanaCurso": 7,
+    "CasaKey": "ravenclaw",
+    "acum": 175
+   },
+   {
+    "SemanaCurso": 8,
+    "CasaKey": "ravenclaw",
+    "acum": 180
+   },
+   {
+    "SemanaCurso": 9,
+    "CasaKey": "ravenclaw",
+    "acum": 210
+   },
+   {
+    "SemanaCurso": 10,
+    "CasaKey": "ravenclaw",
+    "acum": 235
+   },
+   {
+    "SemanaCurso": 11,
+    "CasaKey": "ravenclaw",
+    "acum": 250
+   },
+   {
+    "SemanaCurso": 12,
+    "CasaKey": "ravenclaw",
+    "acum": 275
+   },
+   {
+    "SemanaCurso": 13,
+    "CasaKey": "ravenclaw",
+    "acum": 270
+   },
+   {
+    "SemanaCurso": 14,
+    "CasaKey": "ravenclaw",
+    "acum": 290
+   },
+   {
+    "SemanaCurso": 15,
+    "CasaKey": "ravenclaw",
+    "acum": 355
+   },
+   {
+    "SemanaCurso": 16,
+    "CasaKey": "ravenclaw",
+    "acum": 395
+   },
+   {
+    "SemanaCurso": 17,
+    "CasaKey": "ravenclaw",
+    "acum": 420
+   },
+   {
+    "SemanaCurso": 18,
+    "CasaKey": "ravenclaw",
+    "acum": 425
+   },
+   {
+    "SemanaCurso": 19,
+    "CasaKey": "ravenclaw",
+    "acum": 435
+   },
+   {
+    "SemanaCurso": 20,
+    "CasaKey": "ravenclaw",
+    "acum": 400
+   },
+   {
+    "SemanaCurso": 21,
+    "CasaKey": "ravenclaw",
+    "acum": 400
+   },
+   {
+    "SemanaCurso": 22,
+    "CasaKey": "ravenclaw",
+    "acum": 420
+   },
+   {
+    "SemanaCurso": 23,
+    "CasaKey": "ravenclaw",
+    "acum": 435
+   },
+   {
+    "SemanaCurso": 24,
+    "CasaKey": "ravenclaw",
+    "acum": 505
+   },
+   {
+    "SemanaCurso": 25,
+    "CasaKey": "ravenclaw",
+    "acum": 510
+   },
+   {
+    "SemanaCurso": 26,
+    "CasaKey": "ravenclaw",
+    "acum": 485
+   },
+   {
+    "SemanaCurso": 27,
+    "CasaKey": "ravenclaw",
+    "acum": 490
+   },
+   {
+    "SemanaCurso": 28,
+    "CasaKey": "ravenclaw",
+    "acum": 500
+   },
+   {
+    "SemanaCurso": 29,
+    "CasaKey": "ravenclaw",
+    "acum": 560
+   },
+   {
+    "SemanaCurso": 30,
+    "CasaKey": "ravenclaw",
+    "acum": 555
+   },
+   {
+    "SemanaCurso": 31,
+    "CasaKey": "ravenclaw",
+    "acum": 560
+   },
+   {
+    "SemanaCurso": 32,
+    "CasaKey": "ravenclaw",
+    "acum": 595
+   },
+   {
+    "SemanaCurso": 33,
+    "CasaKey": "ravenclaw",
+    "acum": 605
+   },
+   {
+    "SemanaCurso": 34,
+    "CasaKey": "ravenclaw",
+    "acum": 600
+   },
+   {
+    "SemanaCurso": 35,
+    "CasaKey": "ravenclaw",
+    "acum": 670
+   },
+   {
+    "SemanaCurso": 36,
+    "CasaKey": "ravenclaw",
+    "acum": 670
+   },
+   {
+    "SemanaCurso": 1,
+    "CasaKey": "hufflepuff",
+    "acum": 10
+   },
+   {
+    "SemanaCurso": 2,
+    "CasaKey": "hufflepuff",
+    "acum": 10
+   },
+   {
+    "SemanaCurso": 3,
+    "CasaKey": "hufflepuff",
+    "acum": 10
+   },
+   {
+    "SemanaCurso": 4,
+    "CasaKey": "hufflepuff",
+    "acum": 45
+   },
+   {
+    "SemanaCurso": 5,
+    "CasaKey": "hufflepuff",
+    "acum": 50
+   },
+   {
+    "SemanaCurso": 6,
+    "CasaKey": "hufflepuff",
+    "acum": 45
+   },
+   {
+    "SemanaCurso": 7,
+    "CasaKey": "hufflepuff",
+    "acum": 65
+   },
+   {
+    "SemanaCurso": 8,
+    "CasaKey": "hufflepuff",
+    "acum": 95
+   },
+   {
+    "SemanaCurso": 9,
+    "CasaKey": "hufflepuff",
+    "acum": 105
+   },
+   {
+    "SemanaCurso": 10,
+    "CasaKey": "hufflepuff",
+    "acum": 140
+   },
+   {
+    "SemanaCurso": 11,
+    "CasaKey": "hufflepuff",
+    "acum": 190
+   },
+   {
+    "SemanaCurso": 12,
+    "CasaKey": "hufflepuff",
+    "acum": 215
+   },
+   {
+    "SemanaCurso": 13,
+    "CasaKey": "hufflepuff",
+    "acum": 225
+   },
+   {
+    "SemanaCurso": 14,
+    "CasaKey": "hufflepuff",
+    "acum": 265
+   },
+   {
+    "SemanaCurso": 15,
+    "CasaKey": "hufflepuff",
+    "acum": 275
+   },
+   {
+    "SemanaCurso": 16,
+    "CasaKey": "hufflepuff",
+    "acum": 275
+   },
+   {
+    "SemanaCurso": 17,
+    "CasaKey": "hufflepuff",
+    "acum": 295
+   },
+   {
+    "SemanaCurso": 18,
+    "CasaKey": "hufflepuff",
+    "acum": 295
+   },
+   {
+    "SemanaCurso": 19,
+    "CasaKey": "hufflepuff",
+    "acum": 295
+   },
+   {
+    "SemanaCurso": 20,
+    "CasaKey": "hufflepuff",
+    "acum": 370
+   },
+   {
+    "SemanaCurso": 21,
+    "CasaKey": "hufflepuff",
+    "acum": 370
+   },
+   {
+    "SemanaCurso": 22,
+    "CasaKey": "hufflepuff",
+    "acum": 430
+   },
+   {
+    "SemanaCurso": 23,
+    "CasaKey": "hufflepuff",
+    "acum": 435
+   },
+   {
+    "SemanaCurso": 24,
+    "CasaKey": "hufflepuff",
+    "acum": 435
+   },
+   {
+    "SemanaCurso": 25,
+    "CasaKey": "hufflepuff",
+    "acum": 440
+   },
+   {
+    "SemanaCurso": 26,
+    "CasaKey": "hufflepuff",
+    "acum": 485
+   },
+   {
+    "SemanaCurso": 27,
+    "CasaKey": "hufflepuff",
+    "acum": 495
+   },
+   {
+    "SemanaCurso": 28,
+    "CasaKey": "hufflepuff",
+    "acum": 525
+   },
+   {
+    "SemanaCurso": 29,
+    "CasaKey": "hufflepuff",
+    "acum": 545
+   },
+   {
+    "SemanaCurso": 30,
+    "CasaKey": "hufflepuff",
+    "acum": 560
+   },
+   {
+    "SemanaCurso": 31,
+    "CasaKey": "hufflepuff",
+    "acum": 560
+   },
+   {
+    "SemanaCurso": 32,
+    "CasaKey": "hufflepuff",
+    "acum": 580
+   },
+   {
+    "SemanaCurso": 33,
+    "CasaKey": "hufflepuff",
+    "acum": 615
+   },
+   {
+    "SemanaCurso": 34,
+    "CasaKey": "hufflepuff",
+    "acum": 670
+   },
+   {
+    "SemanaCurso": 35,
+    "CasaKey": "hufflepuff",
+    "acum": 670
+   },
+   {
+    "SemanaCurso": 36,
+    "CasaKey": "hufflepuff",
+    "acum": 710
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "acumulado-archivo-completo",
+  "descripcion": "Acumulado a lo largo de los cinco cursos (cierres de trimestre)",
+  "dax": "EVALUATE FILTER ( SUMMARIZECOLUMNS ( DimSemana[SemanaGlobal], DimCasa[CasaKey], \"acum\", [Puntos Acumulados] ),\n        MOD ( DimSemana[SemanaGlobal] - 1, 36 ) + 1 IN { 12, 24, 36 } )",
+  "claves": [
+   "SemanaGlobal",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "SemanaGlobal": 12,
+    "CasaKey": "gryffindor",
+    "acum": 175
+   },
+   {
+    "SemanaGlobal": 24,
+    "CasaKey": "gryffindor",
+    "acum": 295
+   },
+   {
+    "SemanaGlobal": 36,
+    "CasaKey": "gryffindor",
+    "acum": 520
+   },
+   {
+    "SemanaGlobal": 48,
+    "CasaKey": "gryffindor",
+    "acum": 720
+   },
+   {
+    "SemanaGlobal": 60,
+    "CasaKey": "gryffindor",
+    "acum": 995
+   },
+   {
+    "SemanaGlobal": 72,
+    "CasaKey": "gryffindor",
+    "acum": 1300
+   },
+   {
+    "SemanaGlobal": 84,
+    "CasaKey": "gryffindor",
+    "acum": 1310
+   },
+   {
+    "SemanaGlobal": 96,
+    "CasaKey": "gryffindor",
+    "acum": 1810
+   },
+   {
+    "SemanaGlobal": 108,
+    "CasaKey": "gryffindor",
+    "acum": 2315
+   },
+   {
+    "SemanaGlobal": 120,
+    "CasaKey": "gryffindor",
+    "acum": 2610
+   },
+   {
+    "SemanaGlobal": 132,
+    "CasaKey": "gryffindor",
+    "acum": 2890
+   },
+   {
+    "SemanaGlobal": 144,
+    "CasaKey": "gryffindor",
+    "acum": 3185
+   },
+   {
+    "SemanaGlobal": 156,
+    "CasaKey": "gryffindor",
+    "acum": 3440
+   },
+   {
+    "SemanaGlobal": 168,
+    "CasaKey": "gryffindor",
+    "acum": 3535
+   },
+   {
+    "SemanaGlobal": 180,
+    "CasaKey": "gryffindor",
+    "acum": 3760
+   },
+   {
+    "SemanaGlobal": 12,
+    "CasaKey": "slytherin",
+    "acum": 150
+   },
+   {
+    "SemanaGlobal": 24,
+    "CasaKey": "slytherin",
+    "acum": 315
+   },
+   {
+    "SemanaGlobal": 36,
+    "CasaKey": "slytherin",
+    "acum": 535
+   },
+   {
+    "SemanaGlobal": 48,
+    "CasaKey": "slytherin",
+    "acum": 675
+   },
+   {
+    "SemanaGlobal": 60,
+    "CasaKey": "slytherin",
+    "acum": 810
+   },
+   {
+    "SemanaGlobal": 72,
+    "CasaKey": "slytherin",
+    "acum": 1020
+   },
+   {
+    "SemanaGlobal": 84,
+    "CasaKey": "slytherin",
+    "acum": 1285
+   },
+   {
+    "SemanaGlobal": 96,
+    "CasaKey": "slytherin",
+    "acum": 1310
+   },
+   {
+    "SemanaGlobal": 108,
+    "CasaKey": "slytherin",
+    "acum": 1545
+   },
+   {
+    "SemanaGlobal": 120,
+    "CasaKey": "slytherin",
+    "acum": 1695
+   },
+   {
+    "SemanaGlobal": 132,
+    "CasaKey": "slytherin",
+    "acum": 1840
+   },
+   {
+    "SemanaGlobal": 144,
+    "CasaKey": "slytherin",
+    "acum": 2360
+   },
+   {
+    "SemanaGlobal": 156,
+    "CasaKey": "slytherin",
+    "acum": 2505
+   },
+   {
+    "SemanaGlobal": 168,
+    "CasaKey": "slytherin",
+    "acum": 2710
+   },
+   {
+    "SemanaGlobal": 180,
+    "CasaKey": "slytherin",
+    "acum": 3140
+   },
+   {
+    "SemanaGlobal": 12,
+    "CasaKey": "ravenclaw",
+    "acum": 215
+   },
+   {
+    "SemanaGlobal": 24,
+    "CasaKey": "ravenclaw",
+    "acum": 520
+   },
+   {
+    "SemanaGlobal": 36,
+    "CasaKey": "ravenclaw",
+    "acum": 755
+   },
+   {
+    "SemanaGlobal": 48,
+    "CasaKey": "ravenclaw",
+    "acum": 965
+   },
+   {
+    "SemanaGlobal": 60,
+    "CasaKey": "ravenclaw",
+    "acum": 1195
+   },
+   {
+    "SemanaGlobal": 72,
+    "CasaKey": "ravenclaw",
+    "acum": 1385
+   },
+   {
+    "SemanaGlobal": 84,
+    "CasaKey": "ravenclaw",
+    "acum": 1740
+   },
+   {
+    "SemanaGlobal": 96,
+    "CasaKey": "ravenclaw",
+    "acum": 2015
+   },
+   {
+    "SemanaGlobal": 108,
+    "CasaKey": "ravenclaw",
+    "acum": 2295
+   },
+   {
+    "SemanaGlobal": 120,
+    "CasaKey": "ravenclaw",
+    "acum": 2560
+   },
+   {
+    "SemanaGlobal": 132,
+    "CasaKey": "ravenclaw",
+    "acum": 2860
+   },
+   {
+    "SemanaGlobal": 144,
+    "CasaKey": "ravenclaw",
+    "acum": 3310
+   },
+   {
+    "SemanaGlobal": 156,
+    "CasaKey": "ravenclaw",
+    "acum": 3585
+   },
+   {
+    "SemanaGlobal": 168,
+    "CasaKey": "ravenclaw",
+    "acum": 3815
+   },
+   {
+    "SemanaGlobal": 180,
+    "CasaKey": "ravenclaw",
+    "acum": 3980
+   },
+   {
+    "SemanaGlobal": 12,
+    "CasaKey": "hufflepuff",
+    "acum": 135
+   },
+   {
+    "SemanaGlobal": 24,
+    "CasaKey": "hufflepuff",
+    "acum": 565
+   },
+   {
+    "SemanaGlobal": 36,
+    "CasaKey": "hufflepuff",
+    "acum": 770
+   },
+   {
+    "SemanaGlobal": 48,
+    "CasaKey": "hufflepuff",
+    "acum": 1040
+   },
+   {
+    "SemanaGlobal": 60,
+    "CasaKey": "hufflepuff",
+    "acum": 1355
+   },
+   {
+    "SemanaGlobal": 72,
+    "CasaKey": "hufflepuff",
+    "acum": 1675
+   },
+   {
+    "SemanaGlobal": 84,
+    "CasaKey": "hufflepuff",
+    "acum": 1920
+   },
+   {
+    "SemanaGlobal": 96,
+    "CasaKey": "hufflepuff",
+    "acum": 2075
+   },
+   {
+    "SemanaGlobal": 108,
+    "CasaKey": "hufflepuff",
+    "acum": 2190
+   },
+   {
+    "SemanaGlobal": 120,
+    "CasaKey": "hufflepuff",
+    "acum": 2420
+   },
+   {
+    "SemanaGlobal": 132,
+    "CasaKey": "hufflepuff",
+    "acum": 2645
+   },
+   {
+    "SemanaGlobal": 144,
+    "CasaKey": "hufflepuff",
+    "acum": 2845
+   },
+   {
+    "SemanaGlobal": 156,
+    "CasaKey": "hufflepuff",
+    "acum": 3060
+   },
+   {
+    "SemanaGlobal": 168,
+    "CasaKey": "hufflepuff",
+    "acum": 3280
+   },
+   {
+    "SemanaGlobal": 180,
+    "CasaKey": "hufflepuff",
+    "acum": 3555
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "acumulado-eje-fecha",
+  "descripcion": "El acumulado con eje en FechaInicioSemana llega al total del curso (no se queda en la última semana)",
+  "dax": "EVALUATE TOPN ( 4, SUMMARIZECOLUMNS ( DimSemana[FechaInicioSemana], DimCasa[CasaKey], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), \"acum\", [Puntos Acumulados] ),\n        DimSemana[FechaInicioSemana], DESC )",
+  "claves": [
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "gryffindor",
+    "acum": 575
+   },
+   {
+    "CasaKey": "slytherin",
+    "acum": 780
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "acum": 670
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "acum": 710
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "participacion",
+  "descripcion": "Participación de cada casa en los puntos netos del Curso V",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimCasa[CasaKey], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), \"part\", [% Participación] )",
+  "claves": [
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "gryffindor",
+    "part": 0.21023765996343693
+   },
+   {
+    "CasaKey": "slytherin",
+    "part": 0.2851919561243144
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "part": 0.2449725776965265
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "part": 0.2595978062157221
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "composicion-categorias",
+  "descripcion": "Peso de cada categoría en los puntos otorgados (todo el archivo)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimCategoria[CategoriaKey], \"pct\", [% de Puntos Otorgados] )",
+  "claves": [
+   "CategoriaKey"
+  ],
+  "esperado": [
+   {
+    "CategoriaKey": "academico",
+    "pct": 0.5306786877034811
+   },
+   {
+    "CategoriaKey": "valor",
+    "pct": 0.21036814425244177
+   },
+   {
+    "CategoriaKey": "conducta",
+    "pct": 0.18382168795391937
+   },
+   {
+    "CategoriaKey": "quidditch",
+    "pct": 0.07513148009015777
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "estudiantes-curso-v",
+  "descripcion": "Puntos, puesto y contribución a su casa de cada estudiante en el Curso V (sin el miembro colectivo)",
+  "dax": "EVALUATE FILTER ( SUMMARIZECOLUMNS ( DimEstudiante[EstudianteKey], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ),\n        \"pts\", [Puntos Netos Estudiante], \"pos\", [Posición Estudiante], \"contrib\", [% Contribución a la Casa] ), NOT ISBLANK ( [pts] ) )",
+  "claves": [
+   "EstudianteKey"
+  ],
+  "esperado": [
+   {
+    "EstudianteKey": "nadia-okafor",
+    "pts": 220,
+    "pos": 1,
+    "contrib": 0.3826086956521739
+   },
+   {
+    "EstudianteKey": "juniper-hale",
+    "pts": 10,
+    "pos": 37,
+    "contrib": 0.017391304347826087
+   },
+   {
+    "EstudianteKey": "maren-holloway",
+    "pts": 40,
+    "pos": 23,
+    "contrib": 0.06956521739130435
+   },
+   {
+    "EstudianteKey": "damaris-kroft",
+    "pts": 130,
+    "pos": 7,
+    "contrib": 0.16666666666666666
+   },
+   {
+    "EstudianteKey": "ottoline-graves",
+    "pts": 135,
+    "pos": 6,
+    "contrib": 0.17307692307692307
+   },
+   {
+    "EstudianteKey": "theron-vask",
+    "pts": 45,
+    "pos": 19,
+    "contrib": 0.057692307692307696
+   },
+   {
+    "EstudianteKey": "peregrine-lark",
+    "pts": 45,
+    "pos": 19,
+    "contrib": 0.057692307692307696
+   },
+   {
+    "EstudianteKey": "celeste-amari",
+    "pts": 105,
+    "pos": 11,
+    "contrib": 0.15671641791044777
+   },
+   {
+    "EstudianteKey": "arlo-fenwick",
+    "pts": 140,
+    "pos": 5,
+    "contrib": 0.208955223880597
+   },
+   {
+    "EstudianteKey": "bramble-thistlewood",
+    "pts": 60,
+    "pos": 16,
+    "contrib": 0.08450704225352113
+   },
+   {
+    "EstudianteKey": "rhys-mordaunt",
+    "pts": 20,
+    "pos": 34,
+    "contrib": 0.02564102564102564
+   },
+   {
+    "EstudianteKey": "ptolemy-quist",
+    "pts": -30,
+    "pos": 44,
+    "contrib": -0.04477611940298507
+   },
+   {
+    "EstudianteKey": "tobias-ashcombe",
+    "pts": 10,
+    "pos": 37,
+    "contrib": 0.017391304347826087
+   },
+   {
+    "EstudianteKey": "silas-wren",
+    "pts": -20,
+    "pos": 43,
+    "contrib": -0.034782608695652174
+   },
+   {
+    "EstudianteKey": "quentin-hargreave",
+    "pts": 125,
+    "pos": 9,
+    "contrib": 0.1865671641791045
+   },
+   {
+    "EstudianteKey": "ezra-penhallow",
+    "pts": 25,
+    "pos": 29,
+    "contrib": 0.03731343283582089
+   },
+   {
+    "EstudianteKey": "rosalind-fairweather",
+    "pts": -85,
+    "pos": 47,
+    "contrib": -0.14782608695652175
+   },
+   {
+    "EstudianteKey": "severine-ashby",
+    "pts": 130,
+    "pos": 7,
+    "contrib": 0.16666666666666666
+   },
+   {
+    "EstudianteKey": "imogen-sterling",
+    "pts": 170,
+    "pos": 2,
+    "contrib": 0.2537313432835821
+   },
+   {
+    "EstudianteKey": "odalys-ferro",
+    "pts": 75,
+    "pos": 14,
+    "contrib": 0.11194029850746269
+   },
+   {
+    "EstudianteKey": "owen-tregarth",
+    "pts": 95,
+    "pos": 12,
+    "contrib": 0.13380281690140844
+   },
+   {
+    "EstudianteKey": "gideon-fernsby",
+    "pts": 60,
+    "pos": 16,
+    "contrib": 0.08450704225352113
+   },
+   {
+    "EstudianteKey": "clementine-abara",
+    "pts": 120,
+    "pos": 10,
+    "contrib": 0.16901408450704225
+   },
+   {
+    "EstudianteKey": "ivo-marchetti",
+    "pts": -15,
+    "pos": 41,
+    "contrib": -0.02608695652173913
+   },
+   {
+    "EstudianteKey": "finnian-locke",
+    "pts": 170,
+    "pos": 2,
+    "contrib": 0.2956521739130435
+   },
+   {
+    "EstudianteKey": "lucan-moreau",
+    "pts": 50,
+    "pos": 18,
+    "contrib": 0.0641025641025641
+   },
+   {
+    "EstudianteKey": "isolde-fairfax",
+    "pts": 45,
+    "pos": 19,
+    "contrib": 0.057692307692307696
+   },
+   {
+    "EstudianteKey": "barnaby-whitlock",
+    "pts": -35,
+    "pos": 45,
+    "contrib": -0.04929577464788732
+   },
+   {
+    "EstudianteKey": "poppy-larkspur",
+    "pts": 35,
+    "pos": 24,
+    "contrib": 0.04929577464788732
+   },
+   {
+    "EstudianteKey": "elara-brightwater",
+    "pts": 25,
+    "pos": 29,
+    "contrib": 0.043478260869565216
+   },
+   {
+    "EstudianteKey": "jasper-hollins",
+    "pts": 45,
+    "pos": 19,
+    "contrib": 0.06338028169014084
+   },
+   {
+    "EstudianteKey": "morwenna-sallow",
+    "pts": 25,
+    "pos": 29,
+    "contrib": 0.03205128205128205
+   },
+   {
+    "EstudianteKey": "vesper-lindqvist",
+    "pts": 95,
+    "pos": 12,
+    "contrib": 0.1417910447761194
+   },
+   {
+    "EstudianteKey": "hattie-penrose",
+    "pts": 30,
+    "pos": 25,
+    "contrib": 0.04225352112676056
+   },
+   {
+    "EstudianteKey": "cassius-vale",
+    "pts": 20,
+    "pos": 34,
+    "contrib": 0.02564102564102564
+   },
+   {
+    "EstudianteKey": "ambrose-thorne",
+    "pts": 5,
+    "pos": 39,
+    "contrib": 0.00641025641025641
+   },
+   {
+    "EstudianteKey": "edie-cardew",
+    "pts": 145,
+    "pos": 4,
+    "contrib": 0.20422535211267606
+   },
+   {
+    "EstudianteKey": "aurelia-vance",
+    "pts": 30,
+    "pos": 25,
+    "contrib": 0.05217391304347826
+   },
+   {
+    "EstudianteKey": "livia-castellane",
+    "pts": 30,
+    "pos": 25,
+    "contrib": 0.038461538461538464
+   },
+   {
+    "EstudianteKey": "saoirse-dunmore",
+    "pts": 25,
+    "pos": 29,
+    "contrib": 0.03731343283582089
+   },
+   {
+    "EstudianteKey": "kenji-morita",
+    "pts": -5,
+    "pos": 40,
+    "contrib": -0.007462686567164179
+   },
+   {
+    "EstudianteKey": "rowan-mossley",
+    "pts": 30,
+    "pos": 25,
+    "contrib": 0.04225352112676056
+   },
+   {
+    "EstudianteKey": "wren-ellery",
+    "pts": -15,
+    "pos": 41,
+    "contrib": -0.022388059701492536
+   },
+   {
+    "EstudianteKey": "oswin-crane",
+    "pts": 20,
+    "pos": 34,
+    "contrib": 0.034782608695652174
+   },
+   {
+    "EstudianteKey": "linnea-strand",
+    "pts": -40,
+    "pos": 46,
+    "contrib": -0.05970149253731343
+   },
+   {
+    "EstudianteKey": "corwin-blackthorn",
+    "pts": 70,
+    "pos": 15,
+    "contrib": 0.12173913043478261
+   },
+   {
+    "EstudianteKey": "mabel-okoro",
+    "pts": 25,
+    "pos": 29,
+    "contrib": 0.035211267605633804
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "quidditch-casa-curso",
+  "descripcion": "Tabla de Quidditch por casa y curso (jugados, victorias, derrotas, %, puntos, Snitch, puesto)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], DimCasa[CasaKey],\n        \"jugados\", [Partidos Jugados], \"victorias\", [Victorias], \"derrotas\", [Derrotas], \"pct\", [% Victorias],\n        \"pf\", [Puntos a Favor], \"pc\", [Puntos en Contra], \"snitch\", [Snitches Atrapadas], \"copa\", [Posición Copa Quidditch] )",
+  "claves": [
+   "CursoNumero",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "CasaKey": "gryffindor",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 700,
+    "pc": 510,
+    "snitch": 2,
+    "copa": 1
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "slytherin",
+    "jugados": 3,
+    "victorias": 1,
+    "derrotas": 2,
+    "pct": 0.3333333333333333,
+    "pf": 670,
+    "pc": 700,
+    "snitch": 1,
+    "copa": 2
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "ravenclaw",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 450,
+    "pc": 450,
+    "snitch": 2,
+    "copa": 4
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "hufflepuff",
+    "jugados": 3,
+    "victorias": 1,
+    "derrotas": 2,
+    "pct": 0.3333333333333333,
+    "pf": 510,
+    "pc": 670,
+    "snitch": 1,
+    "copa": 3
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "gryffindor",
+    "jugados": 3,
+    "victorias": 1,
+    "derrotas": 2,
+    "pct": 0.3333333333333333,
+    "pf": 540,
+    "pc": 690,
+    "snitch": 1,
+    "copa": 3
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "slytherin",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 910,
+    "pc": 360,
+    "snitch": 2,
+    "copa": 1
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "ravenclaw",
+    "jugados": 3,
+    "victorias": 0,
+    "derrotas": 3,
+    "pct": 0.0,
+    "pf": 260,
+    "pc": 1000,
+    "snitch": 0,
+    "copa": 4
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "hufflepuff",
+    "jugados": 3,
+    "victorias": 3,
+    "derrotas": 0,
+    "pct": 1.0,
+    "pf": 750,
+    "pc": 410,
+    "snitch": 3,
+    "copa": 2
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "gryffindor",
+    "jugados": 3,
+    "victorias": 0,
+    "derrotas": 3,
+    "pct": 0.0,
+    "pf": 50,
+    "pc": 690,
+    "snitch": 0,
+    "copa": 4
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "slytherin",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 820,
+    "pc": 410,
+    "snitch": 2,
+    "copa": 1
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "ravenclaw",
+    "jugados": 3,
+    "victorias": 3,
+    "derrotas": 0,
+    "pct": 1.0,
+    "pf": 730,
+    "pc": 190,
+    "snitch": 3,
+    "copa": 2
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "hufflepuff",
+    "jugados": 3,
+    "victorias": 1,
+    "derrotas": 2,
+    "pct": 0.3333333333333333,
+    "pf": 330,
+    "pc": 640,
+    "snitch": 1,
+    "copa": 3
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "gryffindor",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 590,
+    "pc": 340,
+    "snitch": 2,
+    "copa": 1
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "slytherin",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 540,
+    "pc": 440,
+    "snitch": 2,
+    "copa": 3
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "ravenclaw",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 580,
+    "pc": 480,
+    "snitch": 2,
+    "copa": 2
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "hufflepuff",
+    "jugados": 3,
+    "victorias": 0,
+    "derrotas": 3,
+    "pct": 0.0,
+    "pf": 260,
+    "pc": 710,
+    "snitch": 0,
+    "copa": 4
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "gryffindor",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 540,
+    "pc": 350,
+    "snitch": 2,
+    "copa": 1
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "slytherin",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 460,
+    "pc": 360,
+    "snitch": 2,
+    "copa": 2
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "ravenclaw",
+    "jugados": 3,
+    "victorias": 0,
+    "derrotas": 3,
+    "pct": 0.0,
+    "pf": 250,
+    "pc": 630,
+    "snitch": 0,
+    "copa": 4
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "hufflepuff",
+    "jugados": 3,
+    "victorias": 2,
+    "derrotas": 1,
+    "pct": 0.6666666666666666,
+    "pf": 420,
+    "pc": 330,
+    "snitch": 2,
+    "copa": 3
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "copa-quidditch-por-nombre",
+  "descripcion": "Puesto en la Copa de Quidditch agrupando por nombre de casa (forma de consulta de la tabla del informe)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[Curso], DimCasa[Casa], \"copa\", [Posición Copa Quidditch] )",
+  "claves": [
+   "Curso",
+   "Casa"
+  ],
+  "esperado": [
+   {
+    "Curso": "Curso I",
+    "Casa": "Gryffindor",
+    "copa": 1
+   },
+   {
+    "Curso": "Curso I",
+    "Casa": "Slytherin",
+    "copa": 2
+   },
+   {
+    "Curso": "Curso I",
+    "Casa": "Ravenclaw",
+    "copa": 4
+   },
+   {
+    "Curso": "Curso I",
+    "Casa": "Hufflepuff",
+    "copa": 3
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Gryffindor",
+    "copa": 3
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Slytherin",
+    "copa": 1
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Ravenclaw",
+    "copa": 4
+   },
+   {
+    "Curso": "Curso II",
+    "Casa": "Hufflepuff",
+    "copa": 2
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Gryffindor",
+    "copa": 4
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Slytherin",
+    "copa": 1
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Ravenclaw",
+    "copa": 2
+   },
+   {
+    "Curso": "Curso III",
+    "Casa": "Hufflepuff",
+    "copa": 3
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Gryffindor",
+    "copa": 1
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Slytherin",
+    "copa": 3
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Ravenclaw",
+    "copa": 2
+   },
+   {
+    "Curso": "Curso IV",
+    "Casa": "Hufflepuff",
+    "copa": 4
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Gryffindor",
+    "copa": 1
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Slytherin",
+    "copa": 2
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Ravenclaw",
+    "copa": 4
+   },
+   {
+    "Curso": "Curso V",
+    "Casa": "Hufflepuff",
+    "copa": 3
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "quidditch-curso",
+  "descripcion": "Partidos, partidos decididos por la Snitch y puntos por partido en cada curso",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], \"partidos\", [Partidos], \"decididos\", [Partidos Decididos por la Snitch], \"promedio\", [Puntos por Partido] )",
+  "claves": [
+   "CursoNumero"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "partidos": 6,
+    "decididos": 4,
+    "promedio": 388.3333333333333
+   },
+   {
+    "CursoNumero": 2,
+    "partidos": 6,
+    "decididos": 3,
+    "promedio": 410.0
+   },
+   {
+    "CursoNumero": 3,
+    "partidos": 6,
+    "decididos": 1,
+    "promedio": 321.6666666666667
+   },
+   {
+    "CursoNumero": 4,
+    "partidos": 6,
+    "decididos": 3,
+    "promedio": 328.3333333333333
+   },
+   {
+    "CursoNumero": 5,
+    "partidos": 6,
+    "decididos": 3,
+    "promedio": 278.3333333333333
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "quidditch-promedio-por-casa",
+  "descripcion": "Puntos por partido de los partidos de cada casa en el Curso V (ambos equipos)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimCasa[CasaKey], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), \"promedio\", [Puntos por Partido] )",
+  "claves": [
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "gryffindor",
+    "promedio": 296.6666666666667
+   },
+   {
+    "CasaKey": "slytherin",
+    "promedio": 273.3333333333333
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "promedio": 293.3333333333333
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "promedio": 250.0
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "quidditch-sin-registros",
+  "descripcion": "Casa sin partidos en el Otoño del Curso I: medidas vacías, sin errores",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimCasa[CasaKey], TREATAS ( { 1 }, DimTrimestre[CursoNumero] ), TREATAS ( { 1 }, DimTrimestre[TrimestreOrden] ),\n            TREATAS ( { \"gryffindor\" }, DimCasa[CasaKey] ),\n            \"jugados\", [Partidos Jugados], \"victorias\", [Victorias], \"pct\", [% Victorias], \"control\", 1 )",
+  "claves": [
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "gryffindor",
+    "jugados": null,
+    "victorias": null,
+    "pct": null
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "goles-por-estudiante",
+  "descripcion": "Goles por estudiante en todo el archivo",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimEstudiante[EstudianteKey], \"goles\", [Goles] )",
+  "claves": [
+   "EstudianteKey"
+  ],
+  "esperado": [
+   {
+    "EstudianteKey": "hattie-penrose",
+    "goles": 41
+   },
+   {
+    "EstudianteKey": "rowan-mossley",
+    "goles": 56
+   },
+   {
+    "EstudianteKey": "clementine-abara",
+    "goles": 25
+   },
+   {
+    "EstudianteKey": "severine-ashby",
+    "goles": 70
+   },
+   {
+    "EstudianteKey": "ottoline-graves",
+    "goles": 72
+   },
+   {
+    "EstudianteKey": "lucan-moreau",
+    "goles": 63
+   },
+   {
+    "EstudianteKey": "arlo-fenwick",
+    "goles": 46
+   },
+   {
+    "EstudianteKey": "wren-ellery",
+    "goles": 32
+   },
+   {
+    "EstudianteKey": "tobias-ashcombe",
+    "goles": 68
+   },
+   {
+    "EstudianteKey": "elara-brightwater",
+    "goles": 40
+   },
+   {
+    "EstudianteKey": "maren-holloway",
+    "goles": 29
+   },
+   {
+    "EstudianteKey": "odalys-ferro",
+    "goles": 44
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "control-quidditch",
+  "descripcion": "Puntos de Quidditch en el libro = 50 × victorias, por casa y curso",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimTrimestre[CursoNumero], DimCasa[CasaKey], \"control\", [Control Quidditch (debe ser 0)] )",
+  "claves": [
+   "CursoNumero",
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CursoNumero": 1,
+    "CasaKey": "gryffindor",
+    "control": 0
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "slytherin",
+    "control": 0
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "ravenclaw",
+    "control": 0
+   },
+   {
+    "CursoNumero": 1,
+    "CasaKey": "hufflepuff",
+    "control": 0
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "gryffindor",
+    "control": 0
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "slytherin",
+    "control": 0
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "ravenclaw",
+    "control": 0
+   },
+   {
+    "CursoNumero": 2,
+    "CasaKey": "hufflepuff",
+    "control": 0
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "gryffindor",
+    "control": 0
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "slytherin",
+    "control": 0
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "ravenclaw",
+    "control": 0
+   },
+   {
+    "CursoNumero": 3,
+    "CasaKey": "hufflepuff",
+    "control": 0
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "gryffindor",
+    "control": 0
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "slytherin",
+    "control": 0
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "ravenclaw",
+    "control": 0
+   },
+   {
+    "CursoNumero": 4,
+    "CasaKey": "hufflepuff",
+    "control": 0
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "gryffindor",
+    "control": 0
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "slytherin",
+    "control": 0
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "ravenclaw",
+    "control": 0
+   },
+   {
+    "CursoNumero": 5,
+    "CasaKey": "hufflepuff",
+    "control": 0
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "hechizos-por-rama",
+  "descripcion": "Intentos, éxitos y tasa de éxito por rama (todo el archivo)",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimHechizo[RamaOrden], \"intentos\", [Intentos], \"exitos\", [Éxitos], \"tasa\", [Tasa de Éxito] )",
+  "claves": [
+   "RamaOrden"
+  ],
+  "esperado": [
+   {
+    "RamaOrden": 1,
+    "intentos": 17926,
+    "exitos": 14961,
+    "tasa": 0.8345977909182194
+   },
+   {
+    "RamaOrden": 2,
+    "intentos": 4024,
+    "exitos": 2923,
+    "tasa": 0.7263916500994035
+   },
+   {
+    "RamaOrden": 3,
+    "intentos": 15177,
+    "exitos": 11622,
+    "tasa": 0.7657639849772683
+   },
+   {
+    "RamaOrden": 4,
+    "intentos": 7248,
+    "exitos": 6194,
+    "tasa": 0.8545805739514348
+   },
+   {
+    "RamaOrden": 5,
+    "intentos": 3803,
+    "exitos": 3068,
+    "tasa": 0.8067315277412569
+   },
+   {
+    "RamaOrden": 6,
+    "intentos": 3674,
+    "exitos": 2616,
+    "tasa": 0.7120304844855743
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "hechizos-por-dificultad",
+  "descripcion": "Tasa de éxito por nivel de dificultad",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimHechizo[Dificultad], \"tasa\", [Tasa de Éxito] )",
+  "claves": [
+   "Dificultad"
+  ],
+  "esperado": [
+   {
+    "Dificultad": 1,
+    "tasa": 0.9462105505643861
+   },
+   {
+    "Dificultad": 2,
+    "tasa": 0.866115801449015
+   },
+   {
+    "Dificultad": 3,
+    "tasa": 0.7479514913143231
+   },
+   {
+    "Dificultad": 4,
+    "tasa": 0.6274365575579257
+   },
+   {
+    "Dificultad": 5,
+    "tasa": 0.4279147513581279
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "hechizos-vs-colegio",
+  "descripcion": "Diferencia en puntos porcentuales de cada casa contra el colegio, por rama, Curso V",
+  "dax": "EVALUATE SUMMARIZECOLUMNS ( DimCasa[CasaKey], DimHechizo[RamaOrden], TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), \"pp\", [Diferencia vs Colegio (pp)] )",
+  "claves": [
+   "CasaKey",
+   "RamaOrden"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "gryffindor",
+    "RamaOrden": 1,
+    "pp": 0.06655684786768257
+   },
+   {
+    "CasaKey": "gryffindor",
+    "RamaOrden": 2,
+    "pp": -1.7452320978769365
+   },
+   {
+    "CasaKey": "gryffindor",
+    "RamaOrden": 3,
+    "pp": 2.748873900473059
+   },
+   {
+    "CasaKey": "gryffindor",
+    "RamaOrden": 4,
+    "pp": 0.6960855736597993
+   },
+   {
+    "CasaKey": "gryffindor",
+    "RamaOrden": 5,
+    "pp": -2.758432655604892
+   },
+   {
+    "CasaKey": "gryffindor",
+    "RamaOrden": 6,
+    "pp": -0.7698887938408894
+   },
+   {
+    "CasaKey": "slytherin",
+    "RamaOrden": 1,
+    "pp": -1.8789045245156788
+   },
+   {
+    "CasaKey": "slytherin",
+    "RamaOrden": 2,
+    "pp": 0.09352320622489918
+   },
+   {
+    "CasaKey": "slytherin",
+    "RamaOrden": 3,
+    "pp": -1.5311963365769898
+   },
+   {
+    "CasaKey": "slytherin",
+    "RamaOrden": 4,
+    "pp": 2.6748865923121534
+   },
+   {
+    "CasaKey": "slytherin",
+    "RamaOrden": 5,
+    "pp": -3.828166134976929
+   },
+   {
+    "CasaKey": "slytherin",
+    "RamaOrden": 6,
+    "pp": 0.22918258212375475
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "RamaOrden": 1,
+    "pp": 1.4763682559435831
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "RamaOrden": 2,
+    "pp": 2.140004004932383
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "RamaOrden": 3,
+    "pp": -1.3099573985238977
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "RamaOrden": 4,
+    "pp": -2.8521371298693143
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "RamaOrden": 5,
+    "pp": -1.193085936883942
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "RamaOrden": 6,
+    "pp": 1.630789302022173
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "RamaOrden": 1,
+    "pp": -0.1606985599945321
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "RamaOrden": 2,
+    "pp": -1.2636911668978068
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "RamaOrden": 3,
+    "pp": -1.1445983984326613
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "RamaOrden": 4,
+    "pp": -1.9924766957407969
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "RamaOrden": 5,
+    "pp": 4.524964698214995
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "RamaOrden": 6,
+    "pp": -1.6754850088183448
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "correlacion-dificultad-exito",
+  "descripcion": "Correlación de Pearson dificultad–tasa de éxito: colegio y por casa",
+  "dax": "EVALUATE UNION (\n        ROW ( \"CasaKey\", \"(todas)\", \"r\", [Correlación Dificultad–Éxito] ),\n        SELECTCOLUMNS ( SUMMARIZECOLUMNS ( DimCasa[CasaKey], \"r\", [Correlación Dificultad–Éxito] ), \"CasaKey\", DimCasa[CasaKey], \"r\", [r] ) )",
+  "claves": [
+   "CasaKey"
+  ],
+  "esperado": [
+   {
+    "CasaKey": "(todas)",
+    "r": -0.8955458198520068
+   },
+   {
+    "CasaKey": "gryffindor",
+    "r": -0.8896113490391028
+   },
+   {
+    "CasaKey": "slytherin",
+    "r": -0.8803270967772617
+   },
+   {
+    "CasaKey": "ravenclaw",
+    "r": -0.9100756546805875
+   },
+   {
+    "CasaKey": "hufflepuff",
+    "r": -0.8782651116942676
+   }
+  ],
+  "tolerancia": 1e-06
+ },
+ {
+  "id": "hechizo-mas-practicado",
+  "descripcion": "Hechizo más practicado en el Curso V",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"top\", [Hechizo Más Practicado], \"practicados\", [Hechizos Practicados] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "top": "Expelliarmus",
+    "practicados": 33
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "calidad-de-datos",
+  "descripcion": "Todos los controles de calidad en 0",
+  "dax": "EVALUATE ROW ( \"problemas\", [Controles con Problemas], \"controles\", COUNTROWS ( ControlCalidad ), \"filas\", SUM ( ControlCalidad[FilasConProblema] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "problemas": 0,
+    "controles": 19,
+    "filas": 0
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "titular-curso-v",
+  "descripcion": "Titular dinámico del Gran Comedor para el Curso V",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"titular\", [Titular Gran Comedor] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "titular": "Slytherin lidera el Curso V: 780 puntos (+70 sobre el segundo)"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "variacion-texto",
+  "descripcion": "Texto de la tarjeta de variación: con período previo y sin él",
+  "dax": "EVALUATE UNION (\n        CALCULATETABLE ( ROW ( \"Curso\", 5, \"texto\", [Variación vs Período Anterior (texto)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) ),\n        CALCULATETABLE ( ROW ( \"Curso\", 1, \"texto\", [Variación vs Período Anterior (texto)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ) ) )",
+  "claves": [
+   "Curso"
+  ],
+  "esperado": [
+   {
+    "Curso": 5,
+    "texto": "-620 vs. Curso IV"
+   },
+   {
+    "Curso": 1,
+    "texto": "Sin período previo"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "relojes-curso-v",
+  "descripcion": "Relojes de arena (SVG idéntico a la referencia): Curso V",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Relojes de Arena (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='%23F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='%23F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='%23fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='%23000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(%23b)'/><circle cx='56' cy='3' r='2.6' fill='%23F3D79B'/><circle cx='204' cy='3' r='2.6' fill='%23F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(%23b)'/><rect x='56' y='36' width='148' height='4' fill='%232E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='%23E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='%232E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(%23b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(%23b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='%233A2E17' stroke-width='1.4'/><g fill='%232E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='%230E121C' stroke='url(%23b)' stroke-width='2.5'/></g><g id='v' stroke='%23F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='%23fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='%23fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='%23fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='%23F3D79B'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='575' data-nivel='68' data-puesto='4'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23C23634' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>IV</text><path d='M130 150V230' stroke='%23C23634' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='230' width='86' height='68' fill='%23C23634'/><rect x='87' y='230' width='86' height='68' fill='url(%23g)'/><rect x='87' y='230' width='86' height='68' fill='url(%23s)'/><rect x='87' y='230' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>GRYFFINDOR</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>575</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 205 del líder</text></g><g transform='translate(260 0)' opacity='1' data-casa='slytherin' data-puntos='780' data-nivel='92' data-puesto='1'><ellipse cx='130' cy='165' rx='122' ry='165' fill='url(%23l)'/><use href='%23e' x='36' y='70' opacity='.8'/><use href='%23e' x='226' y='130' opacity='.6'/><use href='%23e' x='222' y='46' opacity='.9'/><ellipse cx='130' cy='329' rx='84' ry='4' fill='%2333A47D' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><path d='M130 150V206' stroke='%2333A47D' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='206' width='86' height='92' fill='%2333A47D'/><rect x='87' y='206' width='86' height='92' fill='url(%23g)'/><rect x='87' y='206' width='86' height='92' fill='url(%23s)'/><rect x='87' y='206' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>SLYTHERIN</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>780</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Lidera</text></g><g transform='translate(520 0)' opacity='1' data-casa='ravenclaw' data-puntos='670' data-nivel='79' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%236A8FE0' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><path d='M130 150V219' stroke='%236A8FE0' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='219' width='86' height='79' fill='%236A8FE0'/><rect x='87' y='219' width='86' height='79' fill='url(%23g)'/><rect x='87' y='219' width='86' height='79' fill='url(%23s)'/><rect x='87' y='219' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>RAVENCLAW</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>670</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 110 del líder</text></g><g transform='translate(780 0)' opacity='1' data-casa='hufflepuff' data-puntos='710' data-nivel='84' data-puesto='2'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23BC8C2A' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>II</text><path d='M130 150V214' stroke='%23BC8C2A' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='214' width='86' height='84' fill='%23BC8C2A'/><rect x='87' y='214' width='86' height='84' fill='url(%23g)'/><rect x='87' y='214' width='86' height='84' fill='url(%23s)'/><rect x='87' y='214' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>HUFFLEPUFF</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>710</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 70 del líder</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "relojes-curso-i-invierno",
+  "descripcion": "Relojes de arena (SVG idéntico a la referencia): Curso I, Invierno",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Relojes de Arena (SVG)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ), TREATAS ( { 2 }, DimTrimestre[TrimestreOrden] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='%23F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='%23F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='%23fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='%23000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(%23b)'/><circle cx='56' cy='3' r='2.6' fill='%23F3D79B'/><circle cx='204' cy='3' r='2.6' fill='%23F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(%23b)'/><rect x='56' y='36' width='148' height='4' fill='%232E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='%23E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='%232E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(%23b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(%23b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='%233A2E17' stroke-width='1.4'/><g fill='%232E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='%230E121C' stroke='url(%23b)' stroke-width='2.5'/></g><g id='v' stroke='%23F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='%23fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='%23fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='%23fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='%23F3D79B'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='120' data-nivel='26' data-puesto='4'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23C23634' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>IV</text><path d='M130 150V272' stroke='%23C23634' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='272' width='86' height='26' fill='%23C23634'/><rect x='87' y='272' width='86' height='26' fill='url(%23g)'/><rect x='87' y='272' width='86' height='26' fill='url(%23s)'/><rect x='87' y='272' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>GRYFFINDOR</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>120</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 310 del líder</text></g><g transform='translate(260 0)' opacity='1' data-casa='slytherin' data-puntos='165' data-nivel='35' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%2333A47D' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><path d='M130 150V263' stroke='%2333A47D' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='263' width='86' height='35' fill='%2333A47D'/><rect x='87' y='263' width='86' height='35' fill='url(%23g)'/><rect x='87' y='263' width='86' height='35' fill='url(%23s)'/><rect x='87' y='263' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>SLYTHERIN</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>165</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 265 del líder</text></g><g transform='translate(520 0)' opacity='1' data-casa='ravenclaw' data-puntos='305' data-nivel='65' data-puesto='2'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%236A8FE0' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>II</text><path d='M130 150V233' stroke='%236A8FE0' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='233' width='86' height='65' fill='%236A8FE0'/><rect x='87' y='233' width='86' height='65' fill='url(%23g)'/><rect x='87' y='233' width='86' height='65' fill='url(%23s)'/><rect x='87' y='233' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>RAVENCLAW</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>305</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 125 del líder</text></g><g transform='translate(780 0)' opacity='1' data-casa='hufflepuff' data-puntos='430' data-nivel='92' data-puesto='1'><ellipse cx='130' cy='165' rx='122' ry='165' fill='url(%23l)'/><use href='%23e' x='36' y='70' opacity='.8'/><use href='%23e' x='226' y='130' opacity='.6'/><use href='%23e' x='222' y='46' opacity='.9'/><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23BC8C2A' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><path d='M130 150V206' stroke='%23BC8C2A' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='206' width='86' height='92' fill='%23BC8C2A'/><rect x='87' y='206' width='86' height='92' fill='url(%23g)'/><rect x='87' y='206' width='86' height='92' fill='url(%23s)'/><rect x='87' y='206' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>HUFFLEPUFF</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>430</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Lidera</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "relojes-archivo-completo",
+  "descripcion": "Relojes de arena (SVG idéntico a la referencia): los cinco cursos",
+  "dax": "EVALUATE ROW ( \"svg\", [Relojes de Arena (SVG)] )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='%23F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='%23F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='%23fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='%23000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(%23b)'/><circle cx='56' cy='3' r='2.6' fill='%23F3D79B'/><circle cx='204' cy='3' r='2.6' fill='%23F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(%23b)'/><rect x='56' y='36' width='148' height='4' fill='%232E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='%23E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='%232E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(%23b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(%23b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='%233A2E17' stroke-width='1.4'/><g fill='%232E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='%230E121C' stroke='url(%23b)' stroke-width='2.5'/></g><g id='v' stroke='%23F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='%23fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='%23fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='%23fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='%23F3D79B'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='3760' data-nivel='87' data-puesto='2'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23C23634' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>II</text><path d='M130 150V211' stroke='%23C23634' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='211' width='86' height='87' fill='%23C23634'/><rect x='87' y='211' width='86' height='87' fill='url(%23g)'/><rect x='87' y='211' width='86' height='87' fill='url(%23s)'/><rect x='87' y='211' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>GRYFFINDOR</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>3.760</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 220 del líder</text></g><g transform='translate(260 0)' opacity='1' data-casa='slytherin' data-puntos='3140' data-nivel='73' data-puesto='4'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%2333A47D' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>IV</text><path d='M130 150V225' stroke='%2333A47D' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='225' width='86' height='73' fill='%2333A47D'/><rect x='87' y='225' width='86' height='73' fill='url(%23g)'/><rect x='87' y='225' width='86' height='73' fill='url(%23s)'/><rect x='87' y='225' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>SLYTHERIN</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>3.140</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 840 del líder</text></g><g transform='translate(520 0)' opacity='1' data-casa='ravenclaw' data-puntos='3980' data-nivel='92' data-puesto='1'><ellipse cx='130' cy='165' rx='122' ry='165' fill='url(%23l)'/><use href='%23e' x='36' y='70' opacity='.8'/><use href='%23e' x='226' y='130' opacity='.6'/><use href='%23e' x='222' y='46' opacity='.9'/><ellipse cx='130' cy='329' rx='84' ry='4' fill='%236A8FE0' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><path d='M130 150V206' stroke='%236A8FE0' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='206' width='86' height='92' fill='%236A8FE0'/><rect x='87' y='206' width='86' height='92' fill='url(%23g)'/><rect x='87' y='206' width='86' height='92' fill='url(%23s)'/><rect x='87' y='206' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>RAVENCLAW</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>3.980</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Lidera</text></g><g transform='translate(780 0)' opacity='1' data-casa='hufflepuff' data-puntos='3555' data-nivel='82' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23BC8C2A' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><path d='M130 150V216' stroke='%23BC8C2A' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='216' width='86' height='82' fill='%23BC8C2A'/><rect x='87' y='216' width='86' height='82' fill='url(%23g)'/><rect x='87' y='216' width='86' height='82' fill='url(%23s)'/><rect x='87' y='216' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>HUFFLEPUFF</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>3.555</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 425 del líder</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "relojes-filtro-slytherin",
+  "descripcion": "Relojes de arena (SVG idéntico a la referencia): Curso V con el segmentador de casa en Slytherin (las demás se atenúan)",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Relojes de Arena (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), TREATAS ( { \"Slytherin\" }, DimCasa[Casa] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='%23F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='%23F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='%23fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='%23000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(%23b)'/><circle cx='56' cy='3' r='2.6' fill='%23F3D79B'/><circle cx='204' cy='3' r='2.6' fill='%23F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(%23b)'/><rect x='56' y='36' width='148' height='4' fill='%232E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='%23E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='%232E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(%23b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(%23b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='%233A2E17' stroke-width='1.4'/><g fill='%232E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='%230E121C' stroke='url(%23b)' stroke-width='2.5'/></g><g id='v' stroke='%23F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='%23fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='%23fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='%23fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='%23F3D79B'/></defs><g transform='translate(0 0)' opacity='.3' data-casa='gryffindor' data-puntos='575' data-nivel='68' data-puesto='4'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23C23634' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>IV</text><path d='M130 150V230' stroke='%23C23634' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='230' width='86' height='68' fill='%23C23634'/><rect x='87' y='230' width='86' height='68' fill='url(%23g)'/><rect x='87' y='230' width='86' height='68' fill='url(%23s)'/><rect x='87' y='230' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>GRYFFINDOR</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>575</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 205 del líder</text></g><g transform='translate(260 0)' opacity='1' data-casa='slytherin' data-puntos='780' data-nivel='92' data-puesto='1'><ellipse cx='130' cy='165' rx='122' ry='165' fill='url(%23l)'/><use href='%23e' x='36' y='70' opacity='.8'/><use href='%23e' x='226' y='130' opacity='.6'/><use href='%23e' x='222' y='46' opacity='.9'/><ellipse cx='130' cy='329' rx='84' ry='4' fill='%2333A47D' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><path d='M130 150V206' stroke='%2333A47D' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='206' width='86' height='92' fill='%2333A47D'/><rect x='87' y='206' width='86' height='92' fill='url(%23g)'/><rect x='87' y='206' width='86' height='92' fill='url(%23s)'/><rect x='87' y='206' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>SLYTHERIN</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>780</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Lidera</text></g><g transform='translate(520 0)' opacity='.3' data-casa='ravenclaw' data-puntos='670' data-nivel='79' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%236A8FE0' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><path d='M130 150V219' stroke='%236A8FE0' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='219' width='86' height='79' fill='%236A8FE0'/><rect x='87' y='219' width='86' height='79' fill='url(%23g)'/><rect x='87' y='219' width='86' height='79' fill='url(%23s)'/><rect x='87' y='219' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>RAVENCLAW</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>670</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 110 del líder</text></g><g transform='translate(780 0)' opacity='.3' data-casa='hufflepuff' data-puntos='710' data-nivel='84' data-puesto='2'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23BC8C2A' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>II</text><path d='M130 150V214' stroke='%23BC8C2A' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='214' width='86' height='84' fill='%23BC8C2A'/><rect x='87' y='214' width='86' height='84' fill='url(%23g)'/><rect x='87' y='214' width='86' height='84' fill='url(%23s)'/><rect x='87' y='214' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>HUFFLEPUFF</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>710</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>a 70 del líder</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "relojes-sin-registros",
+  "descripcion": "Relojes de arena (SVG idéntico a la referencia): Otoño del Curso I, sólo premios de Quidditch (casas sin anotaciones)",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Relojes de Arena (SVG)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ), TREATAS ( { 1 }, DimTrimestre[TrimestreOrden] ), TREATAS ( { \"quidditch\" }, DimCategoria[CategoriaKey] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='%23F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='%23F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='%23fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='%23000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(%23b)'/><circle cx='56' cy='3' r='2.6' fill='%23F3D79B'/><circle cx='204' cy='3' r='2.6' fill='%23F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(%23b)'/><rect x='56' y='36' width='148' height='4' fill='%232E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='%23E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='%232E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(%23b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(%23b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='%233A2E17' stroke-width='1.4'/><g fill='%232E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='%230E121C' stroke='url(%23b)' stroke-width='2.5'/></g><g id='v' stroke='%23F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='%23fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='%23fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='%23fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='%23F3D79B'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='0' data-nivel='0' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23C23634' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>GRYFFINDOR</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>—</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Sin anotaciones</text></g><g transform='translate(260 0)' opacity='1' data-casa='slytherin' data-puntos='0' data-nivel='0' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%2333A47D' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>SLYTHERIN</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>—</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Sin anotaciones</text></g><g transform='translate(520 0)' opacity='1' data-casa='ravenclaw' data-puntos='50' data-nivel='92' data-puesto='1'><ellipse cx='130' cy='165' rx='122' ry='165' fill='url(%23l)'/><use href='%23e' x='36' y='70' opacity='.8'/><use href='%23e' x='226' y='130' opacity='.6'/><use href='%23e' x='222' y='46' opacity='.9'/><ellipse cx='130' cy='329' rx='84' ry='4' fill='%236A8FE0' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><path d='M130 150V206' stroke='%236A8FE0' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='206' width='86' height='92' fill='%236A8FE0'/><rect x='87' y='206' width='86' height='92' fill='url(%23g)'/><rect x='87' y='206' width='86' height='92' fill='url(%23s)'/><rect x='87' y='206' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>RAVENCLAW</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>50</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Comparte la punta</text></g><g transform='translate(780 0)' opacity='1' data-casa='hufflepuff' data-puntos='50' data-nivel='92' data-puesto='1'><ellipse cx='130' cy='165' rx='122' ry='165' fill='url(%23l)'/><use href='%23e' x='36' y='70' opacity='.8'/><use href='%23e' x='226' y='130' opacity='.6'/><use href='%23e' x='222' y='46' opacity='.9'/><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23BC8C2A' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><path d='M130 150V206' stroke='%23BC8C2A' stroke-width='2' stroke-dasharray='2 4'/><rect x='87' y='206' width='86' height='92' fill='%23BC8C2A'/><rect x='87' y='206' width='86' height='92' fill='url(%23g)'/><rect x='87' y='206' width='86' height='92' fill='url(%23s)'/><rect x='87' y='206' width='86' height='2' fill='%23fff' fill-opacity='.5'/><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>HUFFLEPUFF</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>50</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Comparte la punta</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "relojes-todo-negativo",
+  "descripcion": "Relojes de arena (SVG idéntico a la referencia): Curso V, sólo sanciones (sin máximo positivo: niveles en 0, sin división por cero)",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Relojes de Arena (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), TREATAS ( { \"sancion\" }, DimCategoria[CategoriaKey] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1040 442'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-opacity='.45'/><stop offset='.35' stop-opacity='0'/><stop offset='.75' stop-opacity='.08'/><stop offset='1' stop-opacity='.5'/></linearGradient><radialGradient id='l'><stop offset='0' stop-color='%23F3D79B' stop-opacity='.26'/><stop offset='1' stop-color='%23F3D79B' stop-opacity='0'/></radialGradient><pattern id='g' width='7' height='6' patternUnits='userSpaceOnUse'><circle cx='1.5' cy='1.5' r='.9' fill='%23fff' fill-opacity='.38'/><circle cx='5' cy='4.2' r='.7' fill='%23000' fill-opacity='.3'/></pattern><g id='r'><path d='M94 24 C100 2 160 2 166 24' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M50 22 L56 3 L62 22 Z M198 22 L204 3 L210 22 Z' fill='url(%23b)'/><circle cx='56' cy='3' r='2.6' fill='%23F3D79B'/><circle cx='204' cy='3' r='2.6' fill='%23F3D79B'/><rect x='46' y='22' width='168' height='14' rx='6' fill='url(%23b)'/><rect x='56' y='36' width='148' height='4' fill='%232E2412'/><rect x='59' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><rect x='193' y='40' width='8' height='258' rx='3' fill='url(%23b)'/><path d='M56 98h14v6H56zM190 98h14v6h-14zM56 166h14v6H56zM190 166h14v6h-14zM56 234h14v6H56zM190 234h14v6h-14z' fill='%23E9CB8A'/><rect x='56' y='298' width='148' height='4' fill='%232E2412'/><rect x='46' y='302' width='168' height='14' rx='6' fill='url(%23b)'/><path d='M56 316h22l-4 9H60zM182 316h22l-4 9h-14z' fill='url(%23b)'/><path d='M67 54Q67 40 81 40M193 54Q193 40 179 40M67 284Q67 298 81 298M193 284Q193 298 179 298' fill='none' stroke='url(%23b)' stroke-width='3'/><path d='M60 60l7-6M60 80l7-6M60 128l7-6M60 148l7-6M60 196l7-6M60 216l7-6M60 262l7-6M60 282l7-6M194 60l7-6M194 80l7-6M194 128l7-6M194 148l7-6M194 196l7-6M194 216l7-6M194 262l7-6M194 282l7-6' stroke='%233A2E17' stroke-width='1.4'/><g fill='%232E2412'><circle cx='72' cy='29' r='1.8'/><circle cx='100' cy='29' r='1.8'/><circle cx='160' cy='29' r='1.8'/><circle cx='188' cy='29' r='1.8'/><circle cx='72' cy='309' r='1.8'/><circle cx='100' cy='309' r='1.8'/><circle cx='160' cy='309' r='1.8'/><circle cx='188' cy='309' r='1.8'/></g><circle cx='130' cy='17' r='13' fill='%230E121C' stroke='url(%23b)' stroke-width='2.5'/></g><g id='v' stroke='%23F3E6C8' stroke-opacity='.45' stroke-width='1.2'><path d='M86 40H174V100Q174 132 136 146L133 160H127L124 146Q86 132 86 100Z' fill='%23fff' fill-opacity='.025'/><path d='M127 160H133L136 174Q174 188 174 206V298H86V206Q86 188 124 174Z' fill='%23fff' fill-opacity='.025'/><path d='M95 46V94M95 212V290' stroke='%23fff' stroke-opacity='.22' stroke-width='3' stroke-linecap='round'/></g><path id='e' d='M0-6L1.4-1.4L6 0L1.4 1.4L0 6L-1.4 1.4L-6 0L-1.4-1.4Z' fill='%23F3D79B'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='-410' data-nivel='0' data-puesto='4'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23C23634' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>IV</text><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>GRYFFINDOR</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>−410</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Saldo negativo</text></g><g transform='translate(260 0)' opacity='1' data-casa='slytherin' data-puntos='-355' data-nivel='0' data-puesto='3'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%2333A47D' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>III</text><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>SLYTHERIN</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>−355</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Saldo negativo</text></g><g transform='translate(520 0)' opacity='1' data-casa='ravenclaw' data-puntos='-290' data-nivel='0' data-puesto='2'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%236A8FE0' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>II</text><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>RAVENCLAW</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>−290</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Saldo negativo</text></g><g transform='translate(780 0)' opacity='1' data-casa='hufflepuff' data-puntos='-60' data-nivel='0' data-puesto='1'><ellipse cx='130' cy='329' rx='84' ry='4' fill='%23BC8C2A' fill-opacity='.35'/><use href='%23r'/><text x='130' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='13' fill='%23F3D79B'>I</text><use href='%23v'/><g transform='translate(122 336) scale(.67)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='130' y='371' text-anchor='middle' font-family='Georgia,serif' font-size='20' letter-spacing='3' fill='%23EDE6D6'>HUFFLEPUFF</text><text x='130' y='413' text-anchor='middle' font-family='Segoe UI Light,Segoe UI,sans-serif' font-size='38' fill='%23F4EEDF'>−60</text><text x='130' y='437' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='17' fill='%23B9B1A0'>Saldo negativo</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "estandartes-curso-v",
+  "descripcion": "Estandartes de las casas (SVG idéntico a la referencia): curso-v",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Estandartes de las Casas (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1240 116'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='t' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='.18'/><stop offset='.5' stop-color='%23fff' stop-opacity='0'/><stop offset='1' stop-color='%23000' stop-opacity='.4'/></linearGradient><path id='p' d='M24 12H76V98L50 84L24 98Z'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='575' data-puesto='4' data-variacion='-295'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23C23634'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Gryffindor</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>IV · <tspan fill='%23EDE6D6'>575 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −295 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Fuego · Valentía · Audacia · Temple</text></g><g transform='translate(310 0)' opacity='1' data-casa='slytherin' data-puntos='780' data-puesto='1' data-variacion='-35'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%2333A47D'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Slytherin</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>I · <tspan fill='%23EDE6D6'>780 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −35 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Agua · Ambición · Astucia · Determinación</text></g><g transform='translate(620 0)' opacity='1' data-casa='ravenclaw' data-puntos='670' data-puesto='3' data-variacion='-345'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%236A8FE0'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Ravenclaw</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>III · <tspan fill='%23EDE6D6'>670 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −345 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Aire · Ingenio · Curiosidad · Sabiduría</text></g><g transform='translate(930 0)' opacity='1' data-casa='hufflepuff' data-puntos='710' data-puesto='2' data-variacion='55'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23BC8C2A'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Hufflepuff</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>II · <tspan fill='%23EDE6D6'>710 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%2386CFA4'>▲ +55 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Tierra · Lealtad · Constancia · Justicia</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "estandartes-curso-v-slytherin",
+  "descripcion": "Estandartes de las casas (SVG idéntico a la referencia): curso-v-slytherin",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Estandartes de las Casas (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), TREATAS ( { \"Slytherin\" }, DimCasa[Casa] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1240 116'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='t' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='.18'/><stop offset='.5' stop-color='%23fff' stop-opacity='0'/><stop offset='1' stop-color='%23000' stop-opacity='.4'/></linearGradient><path id='p' d='M24 12H76V98L50 84L24 98Z'/></defs><g transform='translate(0 0)' opacity='.3' data-casa='gryffindor' data-puntos='575' data-puesto='4' data-variacion='-295'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23C23634'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Gryffindor</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>IV · <tspan fill='%23EDE6D6'>575 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −295 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Fuego · Valentía · Audacia · Temple</text></g><g transform='translate(310 0)' opacity='1' data-casa='slytherin' data-puntos='780' data-puesto='1' data-variacion='-35'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%2333A47D'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Slytherin</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>I · <tspan fill='%23EDE6D6'>780 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −35 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Agua · Ambición · Astucia · Determinación</text></g><g transform='translate(620 0)' opacity='.3' data-casa='ravenclaw' data-puntos='670' data-puesto='3' data-variacion='-345'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%236A8FE0'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Ravenclaw</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>III · <tspan fill='%23EDE6D6'>670 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −345 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Aire · Ingenio · Curiosidad · Sabiduría</text></g><g transform='translate(930 0)' opacity='.3' data-casa='hufflepuff' data-puntos='710' data-puesto='2' data-variacion='55'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23BC8C2A'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Hufflepuff</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>II · <tspan fill='%23EDE6D6'>710 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%2386CFA4'>▲ +55 <tspan fill='%238F877A'>vs. Curso IV</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Tierra · Lealtad · Constancia · Justicia</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "estandartes-curso-i",
+  "descripcion": "Estandartes de las casas (SVG idéntico a la referencia): curso-i",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Estandartes de las Casas (SVG)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1240 116'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='t' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='.18'/><stop offset='.5' stop-color='%23fff' stop-opacity='0'/><stop offset='1' stop-color='%23000' stop-opacity='.4'/></linearGradient><path id='p' d='M24 12H76V98L50 84L24 98Z'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='520' data-puesto='4' data-variacion=''><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23C23634'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Gryffindor</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>IV · <tspan fill='%23EDE6D6'>520 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%238F877A'>Sin período previo</text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Fuego · Valentía · Audacia · Temple</text></g><g transform='translate(310 0)' opacity='1' data-casa='slytherin' data-puntos='535' data-puesto='3' data-variacion=''><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%2333A47D'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Slytherin</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>III · <tspan fill='%23EDE6D6'>535 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%238F877A'>Sin período previo</text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Agua · Ambición · Astucia · Determinación</text></g><g transform='translate(620 0)' opacity='1' data-casa='ravenclaw' data-puntos='755' data-puesto='2' data-variacion=''><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%236A8FE0'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Ravenclaw</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>II · <tspan fill='%23EDE6D6'>755 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%238F877A'>Sin período previo</text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Aire · Ingenio · Curiosidad · Sabiduría</text></g><g transform='translate(930 0)' opacity='1' data-casa='hufflepuff' data-puntos='770' data-puesto='1' data-variacion=''><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23BC8C2A'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Hufflepuff</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>I · <tspan fill='%23EDE6D6'>770 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%238F877A'>Sin período previo</text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Tierra · Lealtad · Constancia · Justicia</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "estandartes-curso-ii-invierno",
+  "descripcion": "Estandartes de las casas (SVG idéntico a la referencia): curso-ii-invierno",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Estandartes de las Casas (SVG)] ), TREATAS ( { 2 }, DimTrimestre[CursoNumero] ), TREATAS ( { 2 }, DimTrimestre[TrimestreOrden] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1240 116'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><linearGradient id='t' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='.18'/><stop offset='.5' stop-color='%23fff' stop-opacity='0'/><stop offset='1' stop-color='%23000' stop-opacity='.4'/></linearGradient><path id='p' d='M24 12H76V98L50 84L24 98Z'/></defs><g transform='translate(0 0)' opacity='1' data-casa='gryffindor' data-puntos='275' data-puesto='2' data-variacion='75'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23C23634'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Gryffindor</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>II · <tspan fill='%23EDE6D6'>275 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%2386CFA4'>▲ +75 <tspan fill='%238F877A'>vs. C.II · Otoño</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Fuego · Valentía · Audacia · Temple</text></g><g transform='translate(310 0)' opacity='1' data-casa='slytherin' data-puntos='135' data-puesto='4' data-variacion='-5'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%2333A47D'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Slytherin</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>IV · <tspan fill='%23EDE6D6'>135 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%23E8978B'>▼ −5 <tspan fill='%238F877A'>vs. C.II · Otoño</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Agua · Ambición · Astucia · Determinación</text></g><g transform='translate(620 0)' opacity='1' data-casa='ravenclaw' data-puntos='230' data-puesto='3' data-variacion='20'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%236A8FE0'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Ravenclaw</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>III · <tspan fill='%23EDE6D6'>230 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%2386CFA4'>▲ +20 <tspan fill='%238F877A'>vs. C.II · Otoño</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Aire · Ingenio · Curiosidad · Sabiduría</text></g><g transform='translate(930 0)' opacity='1' data-casa='hufflepuff' data-puntos='315' data-puesto='1' data-variacion='45'><rect x='14' y='8' width='72' height='4' rx='2' fill='url(%23b)'/><circle cx='14' cy='10' r='4' fill='%23F3D79B'/><circle cx='86' cy='10' r='4' fill='%23F3D79B'/><use href='%23p' fill='%23BC8C2A'/><use href='%23p' fill='url(%23t)'/><use href='%23p' fill='none' stroke='url(%23b)' stroke-width='2'/><path d='M30 20H70' stroke='%23F3D79B' stroke-opacity='.45'/><g transform='translate(32 34) scale(1.5)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23F6E7BE' stroke-width='1.6' stroke-linejoin='round'/></g><text x='98' y='36' font-family='Georgia,serif' font-size='24' fill='%23EDE6D6'>Hufflepuff</text><text x='98' y='62' font-family='Segoe UI,sans-serif' font-size='17' fill='%23F3D79B'>I · <tspan fill='%23EDE6D6'>315 puntos</tspan></text><text x='98' y='86' font-family='Segoe UI,sans-serif' font-size='15' fill='%2386CFA4'>▲ +45 <tspan fill='%238F877A'>vs. C.II · Otoño</tspan></text><text x='98' y='106' font-family='Segoe UI,sans-serif' font-size='11' fill='%238F877A'>Tierra · Lealtad · Constancia · Justicia</text></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-curso-v",
+  "descripcion": "Marcador de Quidditch (SVG idéntico a la referencia): Curso V",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Marcador de Quidditch (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='%231C2A3C'/><stop offset='1' stop-color='%230E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(%23w)' stroke='url(%23b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='%235E4A25' stroke-width='.8'/><g fill='none' stroke='%23F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='%23EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='%23E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='%23F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='%23A8843F'><text x='28' y='60'>%23</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='%235E4A25' stroke-width='1'/><path d='M22 192H578' stroke='%235E4A25' stroke-width='.8'/><text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23B9B1A0'>6 partidos · <tspan fill='%23F3D79B'>3</tspan> decididos por la Snitch · 278,3 pts por partido</text><text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23EDE6D6'><tspan fill='%23A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> <tspan fill='%23C23634'>●</tspan> Tobias Ashcombe <tspan fill='%23F3D79B'>11</tspan> · <tspan fill='%236A8FE0'>●</tspan> Arlo Fenwick <tspan fill='%23F3D79B'>10</tspan> · <tspan fill='%236A8FE0'>●</tspan> Odalys Ferro <tspan fill='%23F3D79B'>9</tspan></text><g opacity='1' data-casa='gryffindor' data-puesto='1' data-victorias='2' data-favor='540'><rect x='18' y='73' width='564' height='26' rx='5' fill='%23D9B66F' fill-opacity='.12'/><rect x='18' y='73' width='4' height='26' rx='2' fill='%23C23634'/><circle cx='34' cy='86' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='90' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>I</text><g transform='translate(52 77) scale(.75)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='92' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Gryffindor</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='92'>3</text><text x='300' y='92' fill='%2386CFA4'>2</text><text x='338' y='92' fill='%23E8978B'>1</text><text x='408' y='92' font-weight='600'>540</text><text x='482' y='92' fill='%23B9B1A0'>350</text><text x='532' y='92' fill='%23B9B1A0'>+190</text><text x='578' y='92' fill='%23F3D79B'>2</text></g></g><g opacity='1' data-casa='slytherin' data-puesto='2' data-victorias='2' data-favor='460'><rect x='18' y='103' width='4' height='26' rx='2' fill='%2333A47D'/><circle cx='34' cy='116' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>II</text><g transform='translate(52 107) scale(.75)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='122' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Slytherin</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='122'>3</text><text x='300' y='122' fill='%2386CFA4'>2</text><text x='338' y='122' fill='%23E8978B'>1</text><text x='408' y='122' font-weight='600'>460</text><text x='482' y='122' fill='%23B9B1A0'>360</text><text x='532' y='122' fill='%23B9B1A0'>+100</text><text x='578' y='122' fill='%23F3D79B'>2</text></g></g><g opacity='1' data-casa='hufflepuff' data-puesto='3' data-victorias='2' data-favor='420'><rect x='18' y='133' width='4' height='26' rx='2' fill='%23BC8C2A'/><circle cx='34' cy='146' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>III</text><g transform='translate(52 137) scale(.75)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='152' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Hufflepuff</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='152'>3</text><text x='300' y='152' fill='%2386CFA4'>2</text><text x='338' y='152' fill='%23E8978B'>1</text><text x='408' y='152' font-weight='600'>420</text><text x='482' y='152' fill='%23B9B1A0'>330</text><text x='532' y='152' fill='%23B9B1A0'>+90</text><text x='578' y='152' fill='%23F3D79B'>2</text></g></g><g opacity='1' data-casa='ravenclaw' data-puesto='4' data-victorias='0' data-favor='250'><rect x='18' y='163' width='4' height='26' rx='2' fill='%236A8FE0'/><circle cx='34' cy='176' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='180' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>IV</text><g transform='translate(52 167) scale(.75)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='182' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Ravenclaw</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='182'>3</text><text x='300' y='182' fill='%2386CFA4'>0</text><text x='338' y='182' fill='%23E8978B'>3</text><text x='408' y='182' font-weight='600'>250</text><text x='482' y='182' fill='%23B9B1A0'>630</text><text x='532' y='182' fill='%23B9B1A0'>−380</text><text x='578' y='182' fill='%23F3D79B'>0</text></g></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-curso-i-otono",
+  "descripcion": "Marcador de Quidditch (SVG idéntico a la referencia): Otoño del Curso I (una casa sin partidos: fila con «—» al final)",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Marcador de Quidditch (SVG)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ), TREATAS ( { 1 }, DimTrimestre[TrimestreOrden] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='%231C2A3C'/><stop offset='1' stop-color='%230E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(%23w)' stroke='url(%23b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='%235E4A25' stroke-width='.8'/><g fill='none' stroke='%23F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='%23EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='%23E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='%23F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='%23A8843F'><text x='28' y='60'>%23</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='%235E4A25' stroke-width='1'/><path d='M22 192H578' stroke='%235E4A25' stroke-width='.8'/><text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23B9B1A0'>2 partidos · <tspan fill='%23F3D79B'>2</tspan> decididos por la Snitch · 420,0 pts por partido</text><text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23EDE6D6'><tspan fill='%23A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> <tspan fill='%23BC8C2A'>●</tspan> Hattie Penrose <tspan fill='%23F3D79B'>14</tspan> · <tspan fill='%23BC8C2A'>●</tspan> Rowan Mossley <tspan fill='%23F3D79B'>9</tspan> · <tspan fill='%2333A47D'>●</tspan> Severine Ashby <tspan fill='%23F3D79B'>9</tspan></text><g opacity='1' data-casa='hufflepuff' data-puesto='1' data-victorias='1' data-favor='430'><rect x='18' y='73' width='564' height='26' rx='5' fill='%23D9B66F' fill-opacity='.12'/><rect x='18' y='73' width='4' height='26' rx='2' fill='%23BC8C2A'/><circle cx='34' cy='86' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='90' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>I</text><g transform='translate(52 77) scale(.75)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='92' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Hufflepuff</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='92'>2</text><text x='300' y='92' fill='%2386CFA4'>1</text><text x='338' y='92' fill='%23E8978B'>1</text><text x='408' y='92' font-weight='600'>430</text><text x='482' y='92' fill='%23B9B1A0'>410</text><text x='532' y='92' fill='%23B9B1A0'>+20</text><text x='578' y='92' fill='%23F3D79B'>1</text></g></g><g opacity='1' data-casa='ravenclaw' data-puesto='2' data-victorias='1' data-favor='220'><rect x='18' y='103' width='4' height='26' rx='2' fill='%236A8FE0'/><circle cx='34' cy='116' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>II</text><g transform='translate(52 107) scale(.75)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='122' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Ravenclaw</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='122'>1</text><text x='300' y='122' fill='%2386CFA4'>1</text><text x='338' y='122' fill='%23E8978B'>0</text><text x='408' y='122' font-weight='600'>220</text><text x='482' y='122' fill='%23B9B1A0'>100</text><text x='532' y='122' fill='%23B9B1A0'>+120</text><text x='578' y='122' fill='%23F3D79B'>1</text></g></g><g opacity='1' data-casa='slytherin' data-puesto='3' data-victorias='0' data-favor='190'><rect x='18' y='133' width='4' height='26' rx='2' fill='%2333A47D'/><circle cx='34' cy='146' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>III</text><g transform='translate(52 137) scale(.75)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='152' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Slytherin</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='152'>1</text><text x='300' y='152' fill='%2386CFA4'>0</text><text x='338' y='152' fill='%23E8978B'>1</text><text x='408' y='152' font-weight='600'>190</text><text x='482' y='152' fill='%23B9B1A0'>330</text><text x='532' y='152' fill='%23B9B1A0'>−140</text><text x='578' y='152' fill='%23F3D79B'>0</text></g></g><g opacity='1' data-casa='gryffindor' data-puesto='' data-victorias='' data-favor=''><rect x='18' y='163' width='4' height='26' rx='2' fill='%23C23634'/><circle cx='34' cy='176' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='180' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>—</text><g transform='translate(52 167) scale(.75)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='182' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Gryffindor</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='182'>—</text><text x='300' y='182' fill='%2386CFA4'>—</text><text x='338' y='182' fill='%23E8978B'>—</text><text x='408' y='182' font-weight='600'>—</text><text x='482' y='182' fill='%23B9B1A0'>—</text><text x='532' y='182' fill='%23B9B1A0'>—</text><text x='578' y='182' fill='%23F3D79B'>—</text></g></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-archivo-completo",
+  "descripcion": "Marcador de Quidditch (SVG idéntico a la referencia): los cinco cursos",
+  "dax": "EVALUATE ROW ( \"svg\", [Marcador de Quidditch (SVG)] )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='%231C2A3C'/><stop offset='1' stop-color='%230E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(%23w)' stroke='url(%23b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='%235E4A25' stroke-width='.8'/><g fill='none' stroke='%23F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='%23EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='%23E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='%23F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='%23A8843F'><text x='28' y='60'>%23</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='%235E4A25' stroke-width='1'/><path d='M22 192H578' stroke='%235E4A25' stroke-width='.8'/><text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23B9B1A0'>30 partidos · <tspan fill='%23F3D79B'>14</tspan> decididos por la Snitch · 345,3 pts por partido</text><text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23EDE6D6'><tspan fill='%23A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> <tspan fill='%2333A47D'>●</tspan> Ottoline Graves <tspan fill='%23F3D79B'>72</tspan> · <tspan fill='%2333A47D'>●</tspan> Severine Ashby <tspan fill='%23F3D79B'>70</tspan> · <tspan fill='%23C23634'>●</tspan> Tobias Ashcombe <tspan fill='%23F3D79B'>68</tspan></text><g opacity='1' data-casa='slytherin' data-puesto='1' data-victorias='9' data-favor='3400'><rect x='18' y='73' width='564' height='26' rx='5' fill='%23D9B66F' fill-opacity='.12'/><rect x='18' y='73' width='4' height='26' rx='2' fill='%2333A47D'/><circle cx='34' cy='86' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='90' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>I</text><g transform='translate(52 77) scale(.75)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='92' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Slytherin</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='92'>15</text><text x='300' y='92' fill='%2386CFA4'>9</text><text x='338' y='92' fill='%23E8978B'>6</text><text x='408' y='92' font-weight='600'>3.400</text><text x='482' y='92' fill='%23B9B1A0'>2.270</text><text x='532' y='92' fill='%23B9B1A0'>+1.130</text><text x='578' y='92' fill='%23F3D79B'>9</text></g></g><g opacity='1' data-casa='gryffindor' data-puesto='2' data-victorias='7' data-favor='2420'><rect x='18' y='103' width='4' height='26' rx='2' fill='%23C23634'/><circle cx='34' cy='116' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>II</text><g transform='translate(52 107) scale(.75)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='122' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Gryffindor</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='122'>15</text><text x='300' y='122' fill='%2386CFA4'>7</text><text x='338' y='122' fill='%23E8978B'>8</text><text x='408' y='122' font-weight='600'>2.420</text><text x='482' y='122' fill='%23B9B1A0'>2.580</text><text x='532' y='122' fill='%23B9B1A0'>−160</text><text x='578' y='122' fill='%23F3D79B'>7</text></g></g><g opacity='1' data-casa='ravenclaw' data-puesto='3' data-victorias='7' data-favor='2270'><rect x='18' y='133' width='4' height='26' rx='2' fill='%236A8FE0'/><circle cx='34' cy='146' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>III</text><g transform='translate(52 137) scale(.75)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='152' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Ravenclaw</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='152'>15</text><text x='300' y='152' fill='%2386CFA4'>7</text><text x='338' y='152' fill='%23E8978B'>8</text><text x='408' y='152' font-weight='600'>2.270</text><text x='482' y='152' fill='%23B9B1A0'>2.750</text><text x='532' y='152' fill='%23B9B1A0'>−480</text><text x='578' y='152' fill='%23F3D79B'>7</text></g></g><g opacity='1' data-casa='hufflepuff' data-puesto='3' data-victorias='7' data-favor='2270'><rect x='18' y='163' width='4' height='26' rx='2' fill='%23BC8C2A'/><circle cx='34' cy='176' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='180' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>III</text><g transform='translate(52 167) scale(.75)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='182' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Hufflepuff</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='182'>15</text><text x='300' y='182' fill='%2386CFA4'>7</text><text x='338' y='182' fill='%23E8978B'>8</text><text x='408' y='182' font-weight='600'>2.270</text><text x='482' y='182' fill='%23B9B1A0'>2.760</text><text x='532' y='182' fill='%23B9B1A0'>−490</text><text x='578' y='182' fill='%23F3D79B'>7</text></g></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-filtro-hufflepuff",
+  "descripcion": "Marcador de Quidditch (SVG idéntico a la referencia): Curso V con el segmentador en Hufflepuff (resumen de sus partidos; las demás se atenúan)",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Marcador de Quidditch (SVG)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), TREATAS ( { \"Hufflepuff\" }, DimCasa[Casa] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='%231C2A3C'/><stop offset='1' stop-color='%230E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(%23w)' stroke='url(%23b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='%235E4A25' stroke-width='.8'/><g fill='none' stroke='%23F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='%23EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='%23E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='%23F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='%23A8843F'><text x='28' y='60'>%23</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='%235E4A25' stroke-width='1'/><path d='M22 192H578' stroke='%235E4A25' stroke-width='.8'/><text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23B9B1A0'>3 partidos · <tspan fill='%23F3D79B'>1</tspan> decidido por la Snitch · 250,0 pts por partido</text><text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23EDE6D6'><tspan fill='%23A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> <tspan fill='%23BC8C2A'>●</tspan> Hattie Penrose <tspan fill='%23F3D79B'>5</tspan> · <tspan fill='%23BC8C2A'>●</tspan> Rowan Mossley <tspan fill='%23F3D79B'>4</tspan> · <tspan fill='%23BC8C2A'>●</tspan> Clementine Abara <tspan fill='%23F3D79B'>3</tspan></text><g opacity='.3' data-casa='gryffindor' data-puesto='1' data-victorias='2' data-favor='540'><rect x='18' y='73' width='564' height='26' rx='5' fill='%23D9B66F' fill-opacity='.12'/><rect x='18' y='73' width='4' height='26' rx='2' fill='%23C23634'/><circle cx='34' cy='86' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='90' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>I</text><g transform='translate(52 77) scale(.75)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='92' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Gryffindor</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='92'>3</text><text x='300' y='92' fill='%2386CFA4'>2</text><text x='338' y='92' fill='%23E8978B'>1</text><text x='408' y='92' font-weight='600'>540</text><text x='482' y='92' fill='%23B9B1A0'>350</text><text x='532' y='92' fill='%23B9B1A0'>+190</text><text x='578' y='92' fill='%23F3D79B'>2</text></g></g><g opacity='.3' data-casa='slytherin' data-puesto='2' data-victorias='2' data-favor='460'><rect x='18' y='103' width='4' height='26' rx='2' fill='%2333A47D'/><circle cx='34' cy='116' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>II</text><g transform='translate(52 107) scale(.75)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='122' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Slytherin</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='122'>3</text><text x='300' y='122' fill='%2386CFA4'>2</text><text x='338' y='122' fill='%23E8978B'>1</text><text x='408' y='122' font-weight='600'>460</text><text x='482' y='122' fill='%23B9B1A0'>360</text><text x='532' y='122' fill='%23B9B1A0'>+100</text><text x='578' y='122' fill='%23F3D79B'>2</text></g></g><g opacity='1' data-casa='hufflepuff' data-puesto='3' data-victorias='2' data-favor='420'><rect x='18' y='133' width='4' height='26' rx='2' fill='%23BC8C2A'/><circle cx='34' cy='146' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>III</text><g transform='translate(52 137) scale(.75)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='152' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Hufflepuff</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='152'>3</text><text x='300' y='152' fill='%2386CFA4'>2</text><text x='338' y='152' fill='%23E8978B'>1</text><text x='408' y='152' font-weight='600'>420</text><text x='482' y='152' fill='%23B9B1A0'>330</text><text x='532' y='152' fill='%23B9B1A0'>+90</text><text x='578' y='152' fill='%23F3D79B'>2</text></g></g><g opacity='.3' data-casa='ravenclaw' data-puesto='4' data-victorias='0' data-favor='250'><rect x='18' y='163' width='4' height='26' rx='2' fill='%236A8FE0'/><circle cx='34' cy='176' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='180' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>IV</text><g transform='translate(52 167) scale(.75)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='182' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Ravenclaw</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='182'>3</text><text x='300' y='182' fill='%2386CFA4'>0</text><text x='338' y='182' fill='%23E8978B'>3</text><text x='408' y='182' font-weight='600'>250</text><text x='482' y='182' fill='%23B9B1A0'>630</text><text x='532' y='182' fill='%23B9B1A0'>−380</text><text x='578' y='182' fill='%23F3D79B'>0</text></g></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-curso-i-invierno-ravenclaw",
+  "descripcion": "Marcador de Quidditch (SVG idéntico a la referencia): Curso I, Invierno, segmentador en Ravenclaw: un solo partido (singular) y Hufflepuff sin partidos",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Marcador de Quidditch (SVG)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ), TREATAS ( { 2 }, DimTrimestre[TrimestreOrden] ), TREATAS ( { \"Ravenclaw\" }, DimCasa[Casa] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='%231C2A3C'/><stop offset='1' stop-color='%230E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(%23w)' stroke='url(%23b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='%235E4A25' stroke-width='.8'/><g fill='none' stroke='%23F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='%23EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='%23E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='%23F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='%23A8843F'><text x='28' y='60'>%23</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='%235E4A25' stroke-width='1'/><path d='M22 192H578' stroke='%235E4A25' stroke-width='.8'/><text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23B9B1A0'>1 partido · <tspan fill='%23F3D79B'>1</tspan> decidido por la Snitch · 300,0 pts por partido</text><text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23EDE6D6'><tspan fill='%23A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> <tspan fill='%236A8FE0'>●</tspan> Odalys Ferro <tspan fill='%23F3D79B'>2</tspan> · <tspan fill='%236A8FE0'>●</tspan> Arlo Fenwick <tspan fill='%23F3D79B'>1</tspan></text><g opacity='.3' data-casa='gryffindor' data-puesto='1' data-victorias='1' data-favor='440'><rect x='18' y='73' width='564' height='26' rx='5' fill='%23D9B66F' fill-opacity='.12'/><rect x='18' y='73' width='4' height='26' rx='2' fill='%23C23634'/><circle cx='34' cy='86' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='90' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>I</text><g transform='translate(52 77) scale(.75)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='92' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Gryffindor</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='92'>2</text><text x='300' y='92' fill='%2386CFA4'>1</text><text x='338' y='92' fill='%23E8978B'>1</text><text x='408' y='92' font-weight='600'>440</text><text x='482' y='92' fill='%23B9B1A0'>430</text><text x='532' y='92' fill='%23B9B1A0'>+10</text><text x='578' y='92' fill='%23F3D79B'>1</text></g></g><g opacity='.3' data-casa='slytherin' data-puesto='2' data-victorias='0' data-favor='250'><rect x='18' y='103' width='4' height='26' rx='2' fill='%2333A47D'/><circle cx='34' cy='116' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>II</text><g transform='translate(52 107) scale(.75)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='122' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Slytherin</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='122'>1</text><text x='300' y='122' fill='%2386CFA4'>0</text><text x='338' y='122' fill='%23E8978B'>1</text><text x='408' y='122' font-weight='600'>250</text><text x='482' y='122' fill='%23B9B1A0'>320</text><text x='532' y='122' fill='%23B9B1A0'>−70</text><text x='578' y='122' fill='%23F3D79B'>0</text></g></g><g opacity='1' data-casa='ravenclaw' data-puesto='3' data-victorias='1' data-favor='180'><rect x='18' y='133' width='4' height='26' rx='2' fill='%236A8FE0'/><circle cx='34' cy='146' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>III</text><g transform='translate(52 137) scale(.75)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='152' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Ravenclaw</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='152'>1</text><text x='300' y='152' fill='%2386CFA4'>1</text><text x='338' y='152' fill='%23E8978B'>0</text><text x='408' y='152' font-weight='600'>180</text><text x='482' y='152' fill='%23B9B1A0'>120</text><text x='532' y='152' fill='%23B9B1A0'>+60</text><text x='578' y='152' fill='%23F3D79B'>1</text></g></g><g opacity='.3' data-casa='hufflepuff' data-puesto='' data-victorias='' data-favor=''><rect x='18' y='163' width='4' height='26' rx='2' fill='%23BC8C2A'/><circle cx='34' cy='176' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='180' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>—</text><g transform='translate(52 167) scale(.75)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='182' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Hufflepuff</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='182'>—</text><text x='300' y='182' fill='%2386CFA4'>—</text><text x='338' y='182' fill='%23E8978B'>—</text><text x='408' y='182' font-weight='600'>—</text><text x='482' y='182' fill='%23B9B1A0'>—</text><text x='532' y='182' fill='%23B9B1A0'>—</text><text x='578' y='182' fill='%23F3D79B'>—</text></g></g></svg>"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-sin-partidos",
+  "descripcion": "Marcador sin partidos (Curso V, semana 1): aviso y filas vacías, sin errores",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"svg\", [Marcador de Quidditch (SVG)], \"alt\", [Marcador de Quidditch (descripción)] ), TREATAS ( { 5 }, DimTrimestre[CursoNumero] ), TREATAS ( { 1 }, DimSemana[SemanaCurso] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "svg": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 246'><defs><linearGradient id='b' x1='0' x2='1'><stop offset='0' stop-color='%234A3A1D'/><stop offset='.3' stop-color='%23F3D79B'/><stop offset='.55' stop-color='%23B08A44'/><stop offset='1' stop-color='%233A2E17'/></linearGradient><radialGradient id='w' cx='.5' cy='.5' r='.6'><stop offset='0' stop-color='%231C2A3C'/><stop offset='1' stop-color='%230E1322'/></radialGradient></defs><rect x='2' y='2' width='596' height='242' rx='12' fill='url(%23w)' stroke='url(%23b)' stroke-width='2'/><rect x='8' y='8' width='584' height='230' rx='9' fill='none' stroke='%235E4A25' stroke-width='.8'/><g fill='none' stroke='%23F3D79B' stroke-opacity='.07' stroke-width='1.5'><ellipse cx='300' cy='124' rx='280' ry='88'/><circle cx='300' cy='124' r='22'/><path d='M300 40V234'/><circle cx='34' cy='96' r='7'/><circle cx='26' cy='118' r='9'/><circle cx='34' cy='140' r='7'/><circle cx='566' cy='96' r='7'/><circle cx='574' cy='118' r='9'/><circle cx='566' cy='140' r='7'/></g><g transform='translate(30 27)'><path d='M-4 0C-9-7-16-7-20-4C-15-3-13-1-12 1C-9 1-6 1-4 0ZM4 0C9-7 16-7 20-4C15-3 13-1 12 1C9 1 6 1 4 0Z' fill='%23EDE2C4' fill-opacity='.9'/><circle r='4.5' fill='%23E2BC6A'/></g><text x='56' y='31' font-family='Georgia,serif' font-size='13' letter-spacing='2.5' fill='%23F3D79B'>MARCADOR · COPA DE QUIDDITCH</text><g font-family='Segoe UI,sans-serif' font-size='10' letter-spacing='1' fill='%23A8843F'><text x='28' y='60'>%23</text><text x='72' y='60'>CASA</text><text x='262' y='60' text-anchor='end'>PJ</text><text x='300' y='60' text-anchor='end'>G</text><text x='338' y='60' text-anchor='end'>P</text><text x='408' y='60' text-anchor='end'>A FAVOR</text><text x='482' y='60' text-anchor='end'>EN CONTRA</text><text x='532' y='60' text-anchor='end'>DIF.</text><text x='578' y='60' text-anchor='end'>SNITCH</text></g><path d='M22 67H578' stroke='%235E4A25' stroke-width='1'/><path d='M22 192H578' stroke='%235E4A25' stroke-width='.8'/><text x='300' y='210' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23B9B1A0'>Sin partidos en el período seleccionado</text><text x='300' y='234' text-anchor='middle' font-family='Segoe UI,sans-serif' font-size='12' fill='%23EDE6D6'><tspan fill='%23A8843F' font-size='10' letter-spacing='1'>MÁXIMOS GOLEADORES</tspan> <tspan fill='%23B9B1A0'>sin goles en el período</tspan></text><g opacity='1' data-casa='gryffindor' data-puesto='' data-victorias='' data-favor=''><rect x='18' y='73' width='4' height='26' rx='2' fill='%23C23634'/><circle cx='34' cy='86' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='90' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>—</text><g transform='translate(52 77) scale(.75)'><path d='M12 3.5L21 19.5H3Z' fill='none' stroke='%23C23634' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='92' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Gryffindor</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='92'>—</text><text x='300' y='92' fill='%2386CFA4'>—</text><text x='338' y='92' fill='%23E8978B'>—</text><text x='408' y='92' font-weight='600'>—</text><text x='482' y='92' fill='%23B9B1A0'>—</text><text x='532' y='92' fill='%23B9B1A0'>—</text><text x='578' y='92' fill='%23F3D79B'>—</text></g></g><g opacity='1' data-casa='slytherin' data-puesto='' data-victorias='' data-favor=''><rect x='18' y='103' width='4' height='26' rx='2' fill='%2333A47D'/><circle cx='34' cy='116' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>—</text><g transform='translate(52 107) scale(.75)'><path d='M12 20.5L3 4.5H21Z' fill='none' stroke='%2333A47D' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='122' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Slytherin</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='122'>—</text><text x='300' y='122' fill='%2386CFA4'>—</text><text x='338' y='122' fill='%23E8978B'>—</text><text x='408' y='122' font-weight='600'>—</text><text x='482' y='122' fill='%23B9B1A0'>—</text><text x='532' y='122' fill='%23B9B1A0'>—</text><text x='578' y='122' fill='%23F3D79B'>—</text></g></g><g opacity='1' data-casa='ravenclaw' data-puesto='' data-victorias='' data-favor=''><rect x='18' y='133' width='4' height='26' rx='2' fill='%236A8FE0'/><circle cx='34' cy='146' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>—</text><g transform='translate(52 137) scale(.75)'><path d='M12 3.5L21 19.5H3ZM6.6 13.5H17.4' fill='none' stroke='%236A8FE0' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='152' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Ravenclaw</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='152'>—</text><text x='300' y='152' fill='%2386CFA4'>—</text><text x='338' y='152' fill='%23E8978B'>—</text><text x='408' y='152' font-weight='600'>—</text><text x='482' y='152' fill='%23B9B1A0'>—</text><text x='532' y='152' fill='%23B9B1A0'>—</text><text x='578' y='152' fill='%23F3D79B'>—</text></g></g><g opacity='1' data-casa='hufflepuff' data-puesto='' data-victorias='' data-favor=''><rect x='18' y='163' width='4' height='26' rx='2' fill='%23BC8C2A'/><circle cx='34' cy='176' r='10' fill='%230E121C' stroke='%23A8843F' stroke-width='1.2'/><text x='34' y='180' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%23F3D79B'>—</text><g transform='translate(52 167) scale(.75)'><path d='M12 20.5L3 4.5H21ZM6.6 10.5H17.4' fill='none' stroke='%23BC8C2A' stroke-width='2.6' stroke-linejoin='round'/></g><text x='72' y='182' font-family='Georgia,serif' font-size='16' fill='%23EDE6D6'>Hufflepuff</text><g font-family='Segoe UI,sans-serif' font-size='16' fill='%23EDE6D6' text-anchor='end'><text x='262' y='182'>—</text><text x='300' y='182' fill='%2386CFA4'>—</text><text x='338' y='182' fill='%23E8978B'>—</text><text x='408' y='182' font-weight='600'>—</text><text x='482' y='182' fill='%23B9B1A0'>—</text><text x='532' y='182' fill='%23B9B1A0'>—</text><text x='578' y='182' fill='%23F3D79B'>—</text></g></g></svg>",
+    "alt": "Marcador de la Copa de Quidditch: sin partidos en el período seleccionado"
+   }
+  ],
+  "tolerancia": 0.0005
+ },
+ {
+  "id": "marcador-descripcion",
+  "descripcion": "Texto alternativo del marcador (Otoño del Curso I)",
+  "dax": "EVALUATE CALCULATETABLE ( ROW ( \"alt\", [Marcador de Quidditch (descripción)] ), TREATAS ( { 1 }, DimTrimestre[CursoNumero] ), TREATAS ( { 1 }, DimTrimestre[TrimestreOrden] ) )",
+  "claves": [],
+  "esperado": [
+   {
+    "alt": "Marcador de la Copa de Quidditch: 1.º Hufflepuff, 1 victorias de 2, 430 puntos a favor; 2.º Ravenclaw, 1 victorias de 1, 220 puntos a favor; 3.º Slytherin, 0 victorias de 1, 190 puntos a favor"
+   }
+  ],
+  "tolerancia": 0.0005
+ }
+]
