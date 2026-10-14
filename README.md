@@ -10,6 +10,10 @@ Versión de **Business Intelligence** de *Hogwarts — The Magical Data Experien
 
 > **Proyecto de fans no oficial**, sin afiliación con Warner Bros. Entertainment, Wizarding World Digital ni los titulares de los derechos de Harry Potter. **Todos los datos son ficticios** y fueron generados para demostración: no representan información del canon.
 
+![Demostración: filtro por curso, marcador de Quidditch y tooltip del grimorio](docs/demo.gif)
+
+*Demostración (17 s): el segmentador de Curso cambia los relojes de arena, los KPI y el titular; después, el marcador de Quidditch y el tooltip de la dispersión de hechizos.*
+
 ![Gran Comedor en Power BI Desktop](docs/capturas/final/01-gran-comedor-curso-v.png)
 
 ---
