@@ -60,7 +60,7 @@ Los CSV de `data/` son los datos ficticios de entrada del modelo. Vienen incluid
 ## Estructura de la carpeta
 
 ```
-powerbi/
+Hogwarts-Bi/
 ├─ HogwartsBI.pbix                 ← abrir este archivo en Power BI Desktop
 ├─ data/                           CSV fuente (datos ficticios)
 ├─ tema/HogwartsBI.json            tema de Power BI (importable por separado)
@@ -71,7 +71,7 @@ powerbi/
 │  ├─ modelo.md                    esquema, granularidad, relaciones y decisiones
 │  ├─ diccionario_datos.md         tablas y columnas (generado)
 │  ├─ medidas.md                   catálogo de medidas (generado)
-│  └─ capturas/final/              capturas limpias del diseño final (las anteriores quedan en capturas/ y capturas/antes/)
+│  └─ capturas/final/              capturas limpias del diseño final
 ├─ validacion/
 │  ├─ casos.json                   consultas DAX + resultados esperados
 │  └─ REPORTE_VALIDACION.md        comparación caso por caso
@@ -87,6 +87,8 @@ powerbi/
 | `comparar_validacion.py` | Compara esperado contra DAX y escribe `validacion/REPORTE_VALIDACION.md`. |
 
 Los casos esperados (`validacion/casos.json`) y el resultado de la comparación (`validacion/REPORTE_VALIDACION.md`) están incluidos. Las consultas DAX de los casos se ejecutaron contra el motor local de Power BI Desktop.
+
+> **Limitación de reproducibilidad:** el script que ejecuta esas consultas contra Power BI Desktop (PowerShell) y el archivo con sus resultados (`validacion/resultados_dax.json`) **no se incluyen** en este repositorio. Con lo que hay acá se puede regenerar el resultado esperado (`generar_casos_validacion.py`) y leer el reporte, pero no volver a ejecutar la comparación completa (`comparar_validacion.py` necesita esos resultados).
 
 ---
 
@@ -144,7 +146,7 @@ Además, el SVG incluye atributos `data-puntos`, `data-nivel` y `data-puesto` pa
 - **Calidad de datos:** los 19 controles de `ControlCalidad` dan 0 filas con problema.
 
 **Verificado dentro de Power BI Desktop:**
-- El informe abre, muestra sus 3 páginas y los 54 visuales se renderizan sin errores de campos. Capturas limpias (sólo la página, sin paneles) en `docs/capturas/final/`; los diseños anteriores siguen en `docs/capturas/` y `docs/capturas/antes/`.
+- El informe abre, muestra sus 3 páginas y los 54 visuales se renderizan sin errores de campos. Capturas limpias (sólo la página, sin paneles) en `docs/capturas/final/`.
 - Se abrió el informe en Desktop con ocho estados fijados en los segmentadores: Curso V (las tres páginas); Curso I + Invierno + Ravenclaw (Gran Comedor y Quidditch: las demás casas se atenúan, Hufflepuff sin partidos); todos los cursos (Gran Comedor y Rendimiento: "Sin período previo"); Curso I + Otoño (Gryffindor sin partidos: fila "—" al final del marcador).
 - Los estados de borde que no aparecen en los datos reales (todas las casas con saldo negativo, ningún partido, empates) se verificaron por DAX contra la referencia de Python.
 - Las cifras visibles coinciden con las de los CSV; por ejemplo, Curso V: Slytherin 780, Hufflepuff 710, Ravenclaw 670, Gryffindor 575.
@@ -161,11 +163,11 @@ Además, el SVG incluye atributos `data-puntos`, `data-nivel` y `data-puesto` pa
 
 ---
 
-## Para destacar en un portfolio de Reporting y BI
+## Qué demuestra este proyecto
 
-- **Modelado dimensional defendible:** estrella con copo de nieve justificado en el tiempo, granos explícitos, relaciones 1:N de dirección única, sin ambigüedad y sin columnas calculadas.
-- **Power Query de nivel productivo:** una sola conexión parametrizada, tipado independiente de la configuración regional, catálogos que detienen la carga ante códigos desconocidos, formato ancho a largo y tratamiento explícito de valores faltantes.
-- **DAX con criterio de contexto de filtro:** rankings con empates, período anterior en un calendario escolar no estándar, acumulados que resisten cualquier eje, `TREATAS`, correlación de Pearson y titulares dinámicos.
-- **Calidad de datos dentro del modelo:** 19 controles visibles en el propio informe.
-- **Validación reproducible:** cada número del informe se contrasta automáticamente con una implementación independiente.
-- **Automatización con Python y PowerShell:** exportación, documentación generada desde el modelo y pruebas contra el motor de Power BI Desktop.
+- **Modelo dimensional:** estrella con un copo de nieve en el tiempo (trimestre → semana), granos explícitos, relaciones 1:N de dirección única, sin ambigüedad y sin columnas calculadas en DAX.
+- **Power Query:** una sola conexión parametrizada, tipado independiente de la configuración regional, catálogos que detienen la carga ante códigos desconocidos, paso de formato ancho a largo y tratamiento explícito de valores faltantes.
+- **DAX:** rankings con empates, período anterior en un calendario escolar no estándar, acumulados independientes del eje, `TREATAS`, correlación de Pearson y titulares dinámicos.
+- **Calidad de datos:** 19 controles dentro del modelo, visibles en el propio informe.
+- **Validación:** 47 casos (1.043 valores) comparados contra un cálculo independiente en Python. La ejecución de las consultas DAX se hizo localmente; ese paso no se puede reproducir desde este repositorio (ver la limitación en la sección de scripts).
+- **Python como apoyo:** generación de los casos de validación y referencias de los SVG dinámicos (los cinco scripts de `scripts/`).

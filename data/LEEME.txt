@@ -1,3 +1,3 @@
-Datos FICTICIOS de demostración. Exportados desde src/data de la web con
-powerbi/scripts/exportar_csv.py (semilla del simulador: 2895).
-No editar a mano: regenerar con el script.
+Datos FICTICIOS de demostración. Los generó un simulador determinista
+(semilla 2895) que no forma parte de este repositorio, así que estos CSV no se
+pueden regenerar desde acá. No editar a mano.

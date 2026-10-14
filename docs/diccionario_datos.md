@@ -1,6 +1,6 @@
 # Diccionario de datos
 
-> Generado automáticamente desde el TMDL (`scripts/documentar_modelo.py`). Datos ficticios de demostración.
+> Generado automáticamente desde el TMDL (el script generador no se incluye en este repositorio). Datos ficticios de demostración.
 
 ## DimTrimestre
 
